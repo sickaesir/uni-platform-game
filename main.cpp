@@ -1,23 +1,26 @@
-#include "data/game_vector.hpp"
-#include <iostream>
+#include "common.hpp"
+#include "game/game.hpp"
+#include "data/data_map.hpp"
 
 int main(int argc, char** argv)
 {
-	game_vector<int> vector;
-	for(int i = 0; i < 10; i++)
-		vector.add(10 - i);
+	data::data_map<int, int> map;
 
-	vector.for_each([](const int& index, const int& elem) -> void {
-		std::cout << index << " " << elem << std::endl;
-	});
+	map.set(0, 15);
+	map.set(15, 48);
 
-	vector.remove_at(0);
+	std::cout << map.has_key(0) << std::endl;
 
-	std::cout << "______________________" << std::endl;
 
-		vector.for_each([](const int& index, const int& elem) -> void {
-			std::cout << index << " " << elem << std::endl;
-		});
+	game::game* main_game = new game::game();
+
+	while(main_game->is_running())
+	{
+		main_game->tick();
+	}
+
+	delete main_game;
+	main_game = nullptr;
 
 	return 0;
 }
