@@ -8,7 +8,8 @@ namespace data
   class data_map_node
   {
   public:
-    data_map_node(byte key) :
+    data_map_node(byte _key) :
+      key(_key),
       next(nullptr),
       value(nullptr),
       first_child(nullptr)
@@ -103,6 +104,16 @@ namespace data
     {
       unsigned int key_hash = utils::memory_utils::djb2_hash<key_t>(key);
       root_node->find_node(key_hash, true)->set_value(value);
+    }
+
+    const val_t* get(const key_t& key)
+    {
+      unsigned int key_hash = utils::memory_utils::djb2_hash<key_t>(key);
+      data_map_node<val_t>* target_node = root_node->find_node(key_hash, false);
+
+      if(!target_node) return nullptr;
+
+      return target_node->get_value();
     }
 
     bool has_key(const key_t& key)

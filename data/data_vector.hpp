@@ -1,4 +1,5 @@
 #pragma once
+#include "../common.hpp"
 #include "../utils/memory_utils.hpp"
 #include "../utils/math_utils.hpp"
 
