@@ -1,7 +1,8 @@
 #pragma once
-
+#include "../data/data_vector.hpp"
 namespace game
 {
+	class game_component;
 	class game
 	{
 	public:
@@ -19,6 +20,6 @@ namespace game
 
 	private:
 		bool running;
-		class game_map* map;
+		data::data_vector<game_component*>* components;
 	};
 }

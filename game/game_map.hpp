@@ -1,7 +1,8 @@
 #pragma once
+#include "game_component.hpp"
 namespace game
 {
-	class game_map
+	class game_map : public game_component
 	{
 	public:
 		game_map();
@@ -14,8 +15,8 @@ namespace game
 
 	// public methods
 	public:
-		void tick();
-		void render(int start_from_offset);
+		virtual void tick() override;
+		virtual void render() override;
 
  	private:
 		void extend_map();

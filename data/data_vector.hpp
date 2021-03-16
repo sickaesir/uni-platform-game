@@ -18,13 +18,13 @@ namespace data
 		}
 
 
-		game_vector(int initial_size) : game_vector()
+		data_vector(int initial_size) : data_vector()
 		{
 			resize(initial_size);
 		}
 
 
-		~game_vector()
+		~data_vector()
 		{
 				delete[] vector_ptr;
 		}
@@ -61,7 +61,7 @@ namespace data
 			size--;
 		}
 
-		void for_each(void(*func)(const int&, const elem_t&))
+		void for_each(void(*func)(const int, const elem_t))
 		{
 			for(int i = 0; i < size; i++)
 				func(i, vector_ptr[i]);

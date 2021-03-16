@@ -82,7 +82,7 @@ int game::game_map::width()
 	return map_width;
 }
 
-void game::game_map::render(int start_from_offset)
+void game::game_map::render()
 {
 	for(int i = 0; i < map_height; i++)
 		std::cout << map_text[i] << std::endl;
