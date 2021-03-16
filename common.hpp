@@ -20,3 +20,14 @@ namespace console_code
 	constexpr const char* clear_screen = "\033[2J";
 	constexpr const char* hide_cursor = "\033[?25l";
 }
+
+namespace game_controls
+{
+	enum class game_control_t
+	{
+		left,
+		right,
+		up,
+		down
+	};
+}
