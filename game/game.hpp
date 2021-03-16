@@ -2,26 +2,23 @@
 
 namespace game
 {
-  class game_map;
-  class game
-  {
-  public:
-    game();
-    ~game();
+	class game
+	{
+	public:
+		game();
+		~game();
 
-  // getters
-  public:
-    bool is_running();
+	// getters
+	public:
+		bool is_running();
 
-  // public methods
-  public:
-    void tick();
-    void render();
+	// public methods
+	public:
+		void tick();
+		void render();
 
-
-  private:
-    bool running;
-    game_map* map;
-  };
-
+	private:
+		bool running;
+		class game_map* map;
+	};
 }
