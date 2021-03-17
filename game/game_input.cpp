@@ -36,3 +36,9 @@ void game::game_input<elem_t>::render()
 {
 
 }
+
+template<class elem_t>
+bool game::game_input<elem_t>::on_keyboard(int character)
+{
+	return false;
+}

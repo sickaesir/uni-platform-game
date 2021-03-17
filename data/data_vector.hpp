@@ -82,6 +82,11 @@ namespace data
 			return sizeof(elem_t) * get_allocated_size();
 		}
 
+		elem_t& operator[](std::size_t idx)
+		{
+			return vector_ptr[idx];
+		}
+
 	private:
 		elem_t* vector_ptr;
 		int size;

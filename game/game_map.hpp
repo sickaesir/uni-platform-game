@@ -17,6 +17,7 @@ namespace game
 	public:
 		virtual void tick() override;
 		virtual void render() override;
+		virtual bool on_keyboard(int character) override;
 
  	private:
 		void extend_map();

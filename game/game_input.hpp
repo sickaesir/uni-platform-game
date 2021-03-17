@@ -13,6 +13,7 @@ namespace game
 		void set_input_callback(void(elem_t::*callback)(int), elem_t* instance);
 		virtual void render() override;
 		virtual void tick() override;
+		virtual bool on_keyboard(int character) override;
 
 	private:
 		void (elem_t::*input_callback)(int);

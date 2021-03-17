@@ -25,7 +25,7 @@ namespace game
 
 	private:
 		bool running;
-		data::data_vector<game_component*>* components;
+		data::data_vector<game_component*> components;
 		class game_map* map;
 		game_input<game>* input;
 	};
