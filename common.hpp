@@ -6,7 +6,7 @@
 // custom types
 typedef unsigned char byte;
 
-// game settings
+// game default settings
 namespace settings
 {
 	constexpr const int game_height = 60;

@@ -1,3 +1,3 @@
 #!/bin/sh
 ./build.sh
-./uni-platform-game-bin
+./uni-platform-game-bin $@

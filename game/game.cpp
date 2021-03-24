@@ -3,10 +3,12 @@
 #include "game_map.hpp"
 #include "game_component.hpp"
 #include "game_input.hpp"
+#include "game_settings.hpp"
 
-game::game::game() : game_component(nullptr),
+game::game::game(int argc, char** argv) : game_component(nullptr),
 	running(true)
 {
+	settings = new game_settings(argc, argv); // ! must be first !
 	map = new game_map(this);
 	input = new game_input(this);
 	components.add(map);
@@ -30,6 +32,11 @@ game::game::~game()
 bool game::game::is_running()
 {
 	return running;
+}
+
+game::game_map* game::game::get_map()
+{
+	return map;
 }
 
 bool game::game::on_keyboard(int keyboard_key)

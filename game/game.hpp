@@ -6,12 +6,13 @@ namespace game
 	class game : game_component
 	{
 	public:
-		game();
+		game(int argc, char** argv);
 		~game();
 
 	// getters
 	public:
 		bool is_running();
+		class game_map* get_map();
 
 	// public methods
 	public:
@@ -24,5 +25,6 @@ namespace game
 		data::data_vector<class game_component*> components;
 		class game_map* map;
 		class game_input* input;
+		class game_settings* settings;
 	};
 }
