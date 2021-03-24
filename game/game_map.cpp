@@ -1,8 +1,9 @@
 #include "../common.hpp"
+#include "game.hpp"
 #include "game_map.hpp"
 #include "../utils/memory_utils.hpp"
 
-game::game_map::game_map() :
+game::game_map::game_map(game_component* parent) : game_component(parent),
 	map_width(0),
 	map_height(0)
 {

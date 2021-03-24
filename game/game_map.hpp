@@ -2,10 +2,11 @@
 #include "game_component.hpp"
 namespace game
 {
+	class game;
 	class game_map : public game_component
 	{
 	public:
-		game_map();
+		game_map(game_component* parent);
 		~game_map();
 
 	// public getters

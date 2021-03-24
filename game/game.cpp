@@ -2,14 +2,13 @@
 #include "game.hpp"
 #include "game_map.hpp"
 #include "game_component.hpp"
-#include "game_input.cpp"
+#include "game_input.hpp"
 
-game::game::game() :
+game::game::game() : game_component(nullptr),
 	running(true)
 {
-	map = new game_map();
-	input = new game_input<game>();
-	input->set_input_callback(&game::game::on_keyboard_input, this);
+	map = new game_map(this);
+	input = new game_input(this);
 	components.add(map);
 	components.add(input);
 }
@@ -33,11 +32,12 @@ bool game::game::is_running()
 	return running;
 }
 
-void game::game::on_keyboard_input(int keyboard_key)
+bool game::game::on_keyboard(int keyboard_key)
 {
 	for(int i = 0; i < components.get_size(); i++)
 		if(components[i] && components[i]->on_keyboard(keyboard_key))
 			break;
+	return true;
 }
 
 void game::game::tick()

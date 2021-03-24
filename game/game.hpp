@@ -1,10 +1,9 @@
 #pragma once
 #include "../data/data_vector.hpp"
-#include "game_input.hpp"
+#include "game_component.hpp"
 namespace game
 {
-	class game_component;
-	class game
+	class game : game_component
 	{
 	public:
 		game();
@@ -16,17 +15,14 @@ namespace game
 
 	// public methods
 	public:
-		void tick();
-		void render();
-
-	// private methods
-	private:
-		void on_keyboard_input(int keyboard_key);
+		virtual void tick() override;
+		virtual void render() override;
+		virtual bool on_keyboard(int keyboard_key) override;
 
 	private:
 		bool running;
-		data::data_vector<game_component*> components;
+		data::data_vector<class game_component*> components;
 		class game_map* map;
-		game_input<game>* input;
+		class game_input* input;
 	};
 }
