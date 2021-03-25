@@ -19,10 +19,15 @@ namespace game
 		virtual void tick() override;
 		virtual void render() override;
 		virtual bool on_keyboard(int keyboard_key) override;
+		void write_log(const char* format, va_list args);
+
+	private:
+		void render_console();
 
 	private:
 		bool running;
 		data::data_vector<class game_component*> components;
+		data::data_vector<char*> console_lines;
 		class game_map* map;
 		class game_input* input;
 		class game_settings* settings;
