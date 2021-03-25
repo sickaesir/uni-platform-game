@@ -1,6 +1,7 @@
 #include "game_character.hpp"
 
-game::game_character::game_character()
+game::game_character::game_character(game_component* parent) : game_component(parent, "game_character"),
+	position(0, 0)
 {
 }
 

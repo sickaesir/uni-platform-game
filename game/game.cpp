@@ -4,6 +4,7 @@
 #include "game_component.hpp"
 #include "game_input.hpp"
 #include "game_settings.hpp"
+#include "game_character.hpp"
 #include "../utils/runtime_utils.hpp"
 
 game::game::game(int argc, char** argv) : game_component(nullptr, "game"),
@@ -12,6 +13,7 @@ game::game::game(int argc, char** argv) : game_component(nullptr, "game"),
 	settings = new game_settings(argc, argv); // ! must be first !
 	map = new game_map(this, settings->get_game_height(), settings->get_game_width(), settings->get_map_wall_padding());
 	input = new game_input(this);
+	character = new game_character(this);
 	components.add(map);
 	components.add(input);
 }

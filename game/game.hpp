@@ -31,5 +31,6 @@ namespace game
 		class game_map* map;
 		class game_input* input;
 		class game_settings* settings;
+		class game_character* character;
 	};
 }

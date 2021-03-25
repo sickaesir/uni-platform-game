@@ -1,7 +1,6 @@
 #pragma once
 namespace game
 {
-	class game;
 	class game_component
 	{
 	public:
@@ -14,7 +13,8 @@ namespace game
 
 	public:
 		game_component* get_parent();
-		game* get_game_instance();
+		class game_map* get_game_map();
+		class game* get_game_instance();
 
 	private:
 		game_component* parent_component;

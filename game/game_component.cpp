@@ -1,6 +1,7 @@
 #include "../common.hpp"
 #include "game_component.hpp"
 #include "game.hpp"
+#include "game_map.hpp"
 
 game::game_component::game_component(game_component* parent, const char* name) :
 	parent_component(parent),
@@ -24,6 +25,14 @@ game::game* game::game_component::get_game_instance()
 
 		component = parent;
 	}
+}
+
+game::game_map* game::game_component::get_game_map()
+{
+	game* game_instance = get_game_instance();
+	if(!game_instance) return nullptr;
+
+	return game_instance->get_map();
 }
 
 void game::game_component::log(const char* format, ...)
