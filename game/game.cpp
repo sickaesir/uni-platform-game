@@ -61,7 +61,7 @@ void game::game::render_console()
 	move(settings->get_game_height(), 0);
 	for(int i = 0; i < console_lines.get_size(); i++)
 	{
-		io->draw(3, settings->get_game_height() + i, console::color::yellow, true, console_lines[i]);
+		io->draw(3, settings->get_game_height() + i, console::color::yellow, false, console_lines[i]);
 		//printw(console_lines[i]);
 	}
 }
@@ -88,4 +88,9 @@ void game::game::write_log(const char* format, va_list args)
 game::game_settings* game::game::get_settings()
 {
 	return settings;
+}
+
+game::game_io* game::game::get_io()
+{
+	return io;
 }

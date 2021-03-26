@@ -15,6 +15,7 @@ void game::game_settings::initialize_settings()
 	map_wall_padding = settings::map_wall_padding;
 	console_mode = settings::console_mode;
 	console_lines = settings::console_lines;
+	io_inactive_ticks = settings::io_inactive_ticks;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -87,6 +88,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		console_lines = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("io-inactive-ticks"))
+	{
+		io_inactive_ticks = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -116,4 +121,9 @@ int game::game_settings::get_map_wall_padding()
 int game::game_settings::get_console_lines()
 {
 	return console_lines;
+}
+
+int game::game_settings::get_io_inactive_ticks()
+{
+	return io_inactive_ticks;
 }

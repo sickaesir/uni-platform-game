@@ -3,11 +3,13 @@
 #include "game.hpp"
 #include "game_map.hpp"
 #include "game_settings.hpp"
+#include "game_io.hpp"
 
 game::game_component::game_component(game_component* parent, const char* name) :
 	parent_component(parent),
 	component_name(name),
-	position(0, 0)
+	position(0, 0),
+	direction(direction_type::none)
 {
 }
 
@@ -44,6 +46,14 @@ game::game_map* game::game_component::get_game_map()
 	if(!game_instance) return nullptr;
 
 	return game_instance->get_map();
+}
+
+game::game_io* game::game_component::get_game_io()
+{
+	game* game_instance = get_game_instance();
+	if(!game_instance) return nullptr;
+
+	return game_instance->get_io();
 }
 
 void game::game_component::log(const char* format, ...)
@@ -107,4 +117,14 @@ int game::game_component::pos_x()
 int game::game_component::pos_y()
 {
 	return position.y();
+}
+
+void game::game_component::set_direction(game_component::direction_type dir)
+{
+	direction = dir;
+}
+
+game::game_component::direction_type game::game_component::get_direction()
+{
+	return direction;
 }

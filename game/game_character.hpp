@@ -16,10 +16,19 @@ namespace game
 		virtual bool on_keyboard(int character) override;
 
 	private:
+		void render_head();
+		void render_body();
+		void render_left_arm();
+		void render_right_arm();
+		void render_left_leg();
+		void render_right_leg();
+
 		void on_right_arrow();
 		void on_left_arrow();
 
-	private:
 		void initialize_position();
+
+	private:
+		int walking_direction;
 	};
 }

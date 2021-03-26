@@ -10,11 +10,12 @@ typedef unsigned char byte;
 // game default settings
 namespace settings
 {
-	constexpr const int game_height = 60;
-	constexpr const int game_width = 100;
-	constexpr const int map_wall_padding = 3;
-	constexpr const bool console_mode = false;
-	constexpr const int console_lines = 5;
+	constexpr const int game_height = 60; // game height (console excluded)
+	constexpr const int game_width = 100; // game width (applies to map)
+	constexpr const int map_wall_padding = 3; // map wall sizes
+	constexpr const bool console_mode = false; // console rendering
+	constexpr const int console_lines = 5; // console line count
+	constexpr const int io_inactive_ticks = 100; // number of ticks before signaling inactivity
 };
 
 // console settings

@@ -14,6 +14,7 @@ namespace game
 		int get_map_wall_padding();
 		bool get_console_mode();
 		int get_console_lines();
+		int get_io_inactive_ticks();
 
 	private:
 		void initialize_settings();
@@ -26,6 +27,7 @@ namespace game
 		int game_width;
 		int map_wall_padding;
 		int console_lines;
+		int io_inactive_ticks;
 		bool console_mode;
 		char* game_path;
 	};

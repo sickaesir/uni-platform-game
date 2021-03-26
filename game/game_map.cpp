@@ -2,6 +2,8 @@
 #include "game.hpp"
 #include "game_map.hpp"
 #include "../utils/memory_utils.hpp"
+#include "game_io.hpp"
+#include "../utils/runtime_utils.hpp"
 
 game::game_map::game_map(game_component* parent, int _game_height, int _game_width, int _wall_padding) : 
 	game_component(parent, "game_map"),
@@ -95,9 +97,9 @@ int game::game_map::width()
 
 void game::game_map::render()
 {
-	move(0, 0);
 	for(int i = 0; i < map_height; i++)
-		printw("%s\n\r", map_text[i]);
+		for(int k = 0; k < utils::runtime_utils::strlen(map_text[i]); k++)
+			get_game_io()->draw(k, i, k % 4 ? console::color::magenta : console::color::cyan, false, map_text[i][k]);
 }
 
 void game::game_map::tick()

@@ -16,8 +16,12 @@ namespace game
 	public:
 		void clear_screen();
 		void draw(int x, int y, console::color color, bool bright, const char* format, ...);
+		void draw(int x, int y, console::color color, bool bright, char character);
 
 	private:
 		void init_colors();
+
+	private:
+		int inactive_ticks_counter;
 	};
 }
