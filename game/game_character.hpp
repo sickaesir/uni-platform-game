@@ -16,6 +16,10 @@ namespace game
 		virtual bool on_keyboard(int character) override;
 
 	private:
-		data::data_point position;
+		void on_right_arrow();
+		void on_left_arrow();
+
+	private:
+		void initialize_position();
 	};
 }

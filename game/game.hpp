@@ -13,6 +13,7 @@ namespace game
 	public:
 		bool is_running();
 		class game_map* get_map();
+		class game_settings* get_settings();
 
 	// public methods
 	public:
@@ -26,10 +27,9 @@ namespace game
 
 	private:
 		bool running;
-		data::data_vector<class game_component*> components;
 		data::data_vector<char*> console_lines;
 		class game_map* map;
-		class game_input* input;
+		class game_io* io;
 		class game_settings* settings;
 		class game_character* character;
 	};

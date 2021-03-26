@@ -7,5 +7,5 @@ gcc -g -pthread --std=c++17 -lstdc++ -lncursesw -o uni-platform-game-bin \
 	game/game_component.cpp \
 	game/game.cpp \
 	game/game_map.cpp \
-	game/game_input.cpp \
+	game/game_io.cpp \
 	game/game_character.cpp

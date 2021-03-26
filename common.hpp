@@ -1,8 +1,8 @@
 #pragma once
 
 // std libraries
-#include <stdio.h> // console i/o
 #include <stdarg.h> // used for variadic args manipulation
+#include <ncurses.h>
 
 // custom types
 typedef unsigned char byte;
@@ -17,10 +17,18 @@ namespace settings
 	constexpr const int console_lines = 5;
 };
 
-// console codes
-namespace console_code
+// console settings
+namespace console
 {
-	constexpr const char* reset_cursor_position = "\033[0;0H";
-	constexpr const char* clear_screen = "\033[2J";
-	constexpr const char* hide_cursor = "\033[?25l";
+	enum class color : short int
+	{
+		black = 1,
+		blue,
+		green,
+		cyan,
+		red,
+		magenta,
+		yellow,
+		white
+	};
 };

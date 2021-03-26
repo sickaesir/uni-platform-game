@@ -2,7 +2,7 @@
 #include "game.hpp"
 #include "game_map.hpp"
 #include "game_component.hpp"
-#include "game_input.hpp"
+#include "game_io.hpp"
 #include "game_settings.hpp"
 #include "game_character.hpp"
 #include "../utils/runtime_utils.hpp"
@@ -12,24 +12,20 @@ game::game::game(int argc, char** argv) : game_component(nullptr, "game"),
 {
 	settings = new game_settings(argc, argv); // ! must be first !
 	map = new game_map(this, settings->get_game_height(), settings->get_game_width(), settings->get_map_wall_padding());
-	input = new game_input(this);
+	io = new game_io(this);
 	character = new game_character(this);
-	components.add(map);
-	components.add(input);
+	add_component(map);
+	add_component(io);
+	add_component(character);
 }
 
 game::game::~game()
 {
 	running = false;
-	components.for_each([](int idx, game_component* component) {
-		delete component;
-	});
-
-	components.resize(0);
 
 	// those gets deleted along with the components
 	map = nullptr;
-	input = nullptr;
+	io = nullptr;
 }
 
 bool game::game::is_running()
@@ -44,36 +40,30 @@ game::game_map* game::game::get_map()
 
 bool game::game::on_keyboard(int keyboard_key)
 {
-	for(int i = 0; i < components.get_size(); i++)
-		if(components[i] && components[i]->on_keyboard(keyboard_key))
-			break;
-	return true;
+	return game::game_component::on_keyboard(keyboard_key);
 }
 
 void game::game::tick()
 {
-	components.for_each([](int idx, game_component* component) {
-		if(component)
-			component->tick();
-	});
+	game::game_component::tick();
 }
 
 void game::game::render()
 {
-	printf(console_code::reset_cursor_position);
-	components.for_each([](int idx, game_component* component) {
-		if(component)
-			component->render();
-	});
-
+	io->clear_screen();
+	game::game_component::render();
 	if(settings->get_console_mode())
 		render_console();
 }
 
 void game::game::render_console()
 {
+	move(settings->get_game_height(), 0);
 	for(int i = 0; i < console_lines.get_size(); i++)
-		printf(console_lines[i]);
+	{
+		io->draw(3, settings->get_game_height() + i, console::color::yellow, true, console_lines[i]);
+		//printw(console_lines[i]);
+	}
 }
 
 void game::game::write_log(const char* format, va_list args)
@@ -93,4 +83,9 @@ void game::game::write_log(const char* format, va_list args)
 		delete[] console_lines[0];
 		console_lines.remove_at(0);
 	}
+}
+
+game::game_settings* game::game::get_settings()
+{
+	return settings;
 }

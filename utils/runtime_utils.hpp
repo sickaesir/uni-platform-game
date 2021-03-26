@@ -97,11 +97,11 @@ namespace utils
 			}
 		}
 
-		static inline void assert(bool expression, const char* message, const char* file, const char* line)
+		static inline void assert(bool expression, const char* message, const char* file, int line)
 		{
 			if(expression) return;
 
-			printf("assertion failed on %s:%s -> %s\n", file, line, message);
+			printw("assertion failed on %s:%d -> %s\n", file, line, message);
 
 			// kill it
 			int* p = 0;

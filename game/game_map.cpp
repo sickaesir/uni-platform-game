@@ -63,16 +63,22 @@ void game::game_map::extend_map()
 	int new_section_index = map_width - game_width;
 
 	if(map_width == game_width)
+	{
 		for(int i = wall_padding; i < map_height - wall_padding; i++)
+		{
 			for(int x = 0; x < wall_padding; x++)
+			{
 				map_text[i][x] = '|';
+			}
+		}
+	}
 
 	for(int i = new_section_index; i < map_width; i++)
 	{
 		for(int y = 0; y < wall_padding; y++)
 		{
-			map_text[y][i] = '_';
-			map_text[map_height - 1 - y][i] = '-';
+			char render_char = i % 4 ? '=' : '-';
+			map_text[y][i] = map_text[map_height - 1 - y][i] = render_char;
 		}
 	}
 }
@@ -89,8 +95,9 @@ int game::game_map::width()
 
 void game::game_map::render()
 {
+	move(0, 0);
 	for(int i = 0; i < map_height; i++)
-		printf("%s\n\r", map_text[i]);
+		printw("%s\n\r", map_text[i]);
 }
 
 void game::game_map::tick()
