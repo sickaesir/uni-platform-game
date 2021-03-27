@@ -28,7 +28,10 @@ namespace game
 
 		void initialize_position();
 
+		void on_jump();
+		void jump_tick();
+
 	private:
-		int walking_direction;
+		int jump_velocity;
 	};
 }

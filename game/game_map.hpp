@@ -19,6 +19,7 @@ namespace game
 		virtual void tick() override;
 		virtual void render() override;
 		virtual bool on_keyboard(int character) override;
+		virtual bool check_collision(game_component* requester, int x, int y) override;
 
  	private:
 		void extend_map();

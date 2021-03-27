@@ -8,7 +8,8 @@
 #include "../utils/runtime_utils.hpp"
 
 game::game::game(int argc, char** argv) : game_component(nullptr, "game"),
-	running(true)
+	running(true),
+	tick_count(0)
 {
 	settings = new game_settings(argc, argv); // ! must be first !
 	map = new game_map(this, settings->get_game_height(), settings->get_game_width(), settings->get_map_wall_padding());
@@ -45,7 +46,19 @@ bool game::game::on_keyboard(int keyboard_key)
 
 void game::game::tick()
 {
+	tick_count++;
+	if(tick_count == 0)
+	{
+		tick_count = 1;
+		log("tick count overflow, next tick is 1");
+	}
+
 	game::game_component::tick();
+}
+
+unsigned int game::game::get_tick_count()
+{
+	return tick_count;
 }
 
 void game::game::render()
@@ -60,10 +73,7 @@ void game::game::render_console()
 {
 	move(settings->get_game_height(), 0);
 	for(int i = 0; i < console_lines.get_size(); i++)
-	{
 		io->draw(3, settings->get_game_height() + i, console::color::yellow, false, console_lines[i]);
-		//printw(console_lines[i]);
-	}
 }
 
 void game::game::write_log(const char* format, va_list args)

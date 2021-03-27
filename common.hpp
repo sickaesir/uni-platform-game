@@ -16,6 +16,8 @@ namespace settings
 	constexpr const bool console_mode = false; // console rendering
 	constexpr const int console_lines = 5; // console line count
 	constexpr const int io_inactive_ticks = 100; // number of ticks before signaling inactivity
+	constexpr const int character_jump_velocity = 10; // the unit size of a single jump
+	constexpr const int gravity_ticks = 50; // ticks count before processing a gravity-related tick
 };
 
 // console settings

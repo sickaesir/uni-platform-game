@@ -16,6 +16,8 @@ void game::game_settings::initialize_settings()
 	console_mode = settings::console_mode;
 	console_lines = settings::console_lines;
 	io_inactive_ticks = settings::io_inactive_ticks;
+	character_jump_velocity = settings::character_jump_velocity;
+	gravity_ticks = settings::gravity_ticks;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -92,10 +94,28 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		io_inactive_ticks = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("character-jump-velocity"))
+	{
+		character_jump_velocity = utils::runtime_utils::atoi(arg_value);
+	}
+	else if(CMP_ARG("gravity-ticks"))
+	{
+		gravity_ticks = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
 	return true;
+}
+
+int game::game_settings::get_gravity_ticks()
+{
+	return gravity_ticks;
+}
+
+int game::game_settings::get_character_jump_velocity()
+{
+	return character_jump_velocity;
 }
 
 bool game::game_settings::get_console_mode()

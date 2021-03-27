@@ -85,6 +85,17 @@ void game::game_map::extend_map()
 	}
 }
 
+bool game::game_map::check_collision(game_component* requester, int x, int y)
+{
+	if(x < wall_padding || y < wall_padding)
+		return true;
+
+	if(y > map_height - wall_padding - 1)
+		return true;
+
+	return game_component::check_collision(requester, x, y);
+}
+
 int game::game_map::height()
 {
 	return map_height;

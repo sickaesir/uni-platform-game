@@ -128,3 +128,40 @@ game::game_component::direction_type game::game_component::get_direction()
 {
 	return direction;
 }
+
+bool game::game_component::check_collision(game_component* requester, int x, int y)
+{
+	for(int i = 0; i < children.get_size(); i++)
+		if(children[i] && children[i] != requester && children[i]->check_collision(requester, x, y))
+			return true;
+
+	return false;
+}
+
+bool game::game_component::check_game_collision(int x, int y)
+{
+	game* game_instance = get_game_instance();
+	if(!game_instance) return false;
+
+	return game_instance->check_collision(this, x, y);
+}
+
+game::game_component* game::game_component::get_child(int index)
+{
+	if(index < 0 || index >= children.get_size())
+		return nullptr;
+	return children[index];
+}
+
+int game::game_component::get_children_count()
+{
+	return children.get_size();
+}
+
+unsigned int game::game_component::get_tick_count()
+{
+	game* game_instance = get_game_instance();
+	if(!game_instance) return 0;
+
+	return game_instance->get_tick_count();
+}

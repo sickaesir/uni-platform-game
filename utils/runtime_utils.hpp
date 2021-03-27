@@ -100,12 +100,12 @@ namespace utils
 		static inline void assert(bool expression, const char* message, const char* file, int line)
 		{
 			if(expression) return;
-
+			nodelay(stdscr, false);
+			erase();
+			move(0, 0);
+			attron(COLOR_PAIR(console::color::red));
 			printw("assertion failed on %s:%d -> %s\n", file, line, message);
-
-			// kill it
-			int* p = 0;
-			*p = 0;
+			while(true) getch();
 		}
 	};
 }
