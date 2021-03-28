@@ -11,7 +11,8 @@ game::game_map::game_map(game_component* parent, int _game_height, int _game_wid
 	map_height(0),
 	game_width(_game_width),
 	game_height(_game_height),
-	wall_padding(_wall_padding)
+	wall_padding(_wall_padding),
+	map_offset(0)
 {
 	extend_map();
 }
@@ -34,10 +35,12 @@ void game::game_map::extend_map()
 		map_height = game_height;
 		for(int i = 0; i < map_height; i++)
 		{
-			map_text[i] = new char[game_width];
+			map_text[i] = new char[game_width + 1];
 			utils::memory_utils::memory_set(map_text[i], ' ', game_width);
+			map_text[i][game_width] = 0x00;
 		}
 		map_width = game_width;
+		log("initialized map data");
 	}
 	else
 	{
@@ -53,9 +56,11 @@ void game::game_map::extend_map()
 
 		for(int i = 0; i < map_height; i++)
 		{
-			map_text[i] = new char[map_width];
+			map_text[i] = new char[map_width + 1];
 			utils::memory_utils::memory_copy(map_text[i], old_map[i], map_width - game_width);
+			utils::memory_utils::memory_set(map_text[i] + map_width - game_width, ' ', game_width);
 			delete[] old_map[i];
+			map_text[i][map_width] = 0x00;
 		}
 
 		delete[] old_map;
@@ -73,6 +78,8 @@ void game::game_map::extend_map()
 				map_text[i][x] = '|';
 			}
 		}
+
+		log("initialized map left-most wall");
 	}
 
 	for(int i = new_section_index; i < map_width; i++)
@@ -83,6 +90,8 @@ void game::game_map::extend_map()
 			map_text[y][i] = map_text[map_height - 1 - y][i] = render_char;
 		}
 	}
+
+	log("map expanded, x axis is now %d unit long", map_width);
 }
 
 bool game::game_map::check_collision(game_component* requester, int x, int y)
@@ -109,8 +118,8 @@ int game::game_map::width()
 void game::game_map::render()
 {
 	for(int i = 0; i < map_height; i++)
-		for(int k = 0; k < utils::runtime_utils::strlen(map_text[i]); k++)
-			get_game_io()->draw(k, i, k % 4 ? console::color::magenta : console::color::cyan, false, map_text[i][k]);
+		for(int c = 0, k = map_offset; k < game_width + map_offset + 1; k++, c++)
+			get_game_io()->draw(c, i, k % 4 ? console::color::magenta : console::color::cyan, false, map_text[i][k]);
 }
 
 void game::game_map::tick()
@@ -121,4 +130,21 @@ void game::game_map::tick()
 bool game::game_map::on_keyboard(int character)
 {
 	return false;
+}
+
+void game::game_map::increment_map_offset()
+{
+	map_offset++;
+	if(map_width - map_offset < 100)
+		extend_map();
+}
+
+void game::game_map::decrement_map_offset()
+{
+	map_offset--;
+}
+
+int game::game_map::get_map_offset()
+{
+	return map_offset;
 }

@@ -21,6 +21,10 @@ namespace game
 		virtual bool on_keyboard(int character) override;
 		virtual bool check_collision(game_component* requester, int x, int y) override;
 
+		int get_map_offset();
+		void increment_map_offset();
+		void decrement_map_offset();
+
  	private:
 		void extend_map();
 
@@ -31,5 +35,6 @@ namespace game
 		int game_height;
 		int game_width;
 		int wall_padding;
+		int map_offset;
 	};
 }

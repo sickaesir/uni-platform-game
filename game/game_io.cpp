@@ -60,7 +60,7 @@ void game::game_io::tick()
 	else
 		inactive_ticks_counter = get_game_settings()->get_io_inactive_ticks();
 
-	log("received keyboard input -> 0x%04x", current_char);
+	//log("received keyboard input -> 0x%04x", current_char);
 	game_component* parent = get_parent();
 	if(current_char && parent)
 		parent->on_keyboard(current_char);

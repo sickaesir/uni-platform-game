@@ -2,6 +2,7 @@
 #include "../utils/runtime_utils.hpp"
 #include "game_settings.hpp"
 #include "game_io.hpp"
+#include "game_map.hpp"
 
 game::game_character::game_character(game_component* parent) : game_component(parent, "game_character")
 	, jump_velocity(0)
@@ -33,7 +34,7 @@ void game::game_character::jump_tick()
 	{
 		if(check_game_collision(pos_x(), pos_y() + 1))
 			return;
-		log("no collision at y:%d, descending by 1 unit", pos_y() + 1);
+//		log("no collision at y:%d, descending by 1 unit", pos_y() + 1);
 		pos_y(pos_y() + 1);
 		return;
 	}
@@ -51,9 +52,6 @@ void game::game_character::jump_tick()
 
 void game::game_character::initialize_position()
 {
-	game_map* map = get_game_map();
-	runtime_assert(map, "failed to initialize position, map n/a");
-
 	game_settings* settings = get_game_settings();
 	runtime_assert(settings, "failed to initialize position, settings n/a");
 
@@ -197,15 +195,21 @@ void game::game_character::on_right_arrow()
 		case game_component::direction_type::left:
 			log("direction is now none");
 			set_direction(game_component::direction_type::none);
-		break;
+		return;
 		case game_component::direction_type::none:
 			log("direction is now right");
 			set_direction(game_component::direction_type::right);
-		break;
-		case game_component::direction_type::right:
-			pos_x(pos_x() + 1);
-		break;
+		return;
 	}
+
+	if(pos_x() >= get_game_settings()->get_game_width() - 20)
+	{
+		game_map* map = get_game_map();
+		map->increment_map_offset();
+		return;
+	}
+
+	pos_x(pos_x() + 1);
 }
 
 void game::game_character::on_left_arrow()
@@ -224,6 +228,12 @@ void game::game_character::on_left_arrow()
 
 	if(check_game_collision(pos_x() - 1, pos_y()))
 		return;
+
+	if(pos_x() <= 10 && get_game_map()->get_map_offset())
+	{
+		get_game_map()->decrement_map_offset();
+		return;
+	}
 
 	pos_x(pos_x() - 1);
 
