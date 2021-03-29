@@ -48,6 +48,9 @@ void game::game_character::jump_tick()
 
 	jump_velocity--;
 	pos_y(pos_y() - 1);
+
+	if(!jump_velocity)
+		log("jump velocity points resetted, ending jump");
 }
 
 void game::game_character::initialize_position()
@@ -179,10 +182,7 @@ bool game::game_character::on_keyboard(int character)
 void game::game_character::on_jump()
 {
 	if(jump_velocity || !check_game_collision(pos_x(), pos_y() + 1))
-	{
-		log("jump initialization attempt while already jumping, skipping");
 		return;
-	}
 
 	jump_velocity = get_game_settings()->get_character_jump_velocity();
 	log("initialized jump with %d velocity units", jump_velocity);
