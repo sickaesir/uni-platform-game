@@ -1,6 +1,7 @@
 #pragma once
 #include "../common.hpp"
 #include "../data/data_vector.hpp"
+#include "memory_utils.hpp"
 
 #define runtime_assert(expr, msg) { utils::runtime_utils::assert(expr, msg, __FILE__, __LINE__); }
 
@@ -17,23 +18,6 @@ namespace utils
 				if(!*(str++)) return l;
 				l++;
 			}
-		}
-
-		static inline void memcpy(void* dest, void* src, int len)
-		{
-			for(int i = 0; i < len; i++)
-				((char*)dest)[i] = ((char*)src)[i];
-		}
-
-		static inline void memset(void* dest, char p, int len)
-		{
-			for(int i = 0; i < len; i++)
-				((char*)dest)[i] = p;
-		}
-
-		static inline void memset_zero(void* dest, int len)
-		{
-			memset(dest, 0x00, len);
 		}
 
 		static inline int atoi(char* str)
@@ -78,8 +62,8 @@ namespace utils
 					}
 
 					char* split = new char[split_len + 1];
-					memset_zero(split, split_len + 1);
-					memcpy(split, str + split_start_idx, split_len);
+					utils::memory_utils::memory_set_zero<char>(split, split_len + 1);
+					utils::memory_utils::memory_copy<char>(split, str + split_start_idx, split_len);
 					out_str.add(split);
 					split_len = 0;
 					split_start_idx = i + 1;
@@ -91,8 +75,8 @@ namespace utils
 			if(split_len)
 			{
 				char* split = new char[split_len + 1];
-				memset_zero(split, split_len + 1);
-				memcpy(split, str + split_start_idx, split_len);
+				utils::memory_utils::memory_set_zero<char>(split, split_len + 1);
+				utils::memory_utils::memory_copy<char>(split, str + split_start_idx, split_len);
 				out_str.add(split);
 			}
 		}

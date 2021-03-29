@@ -18,6 +18,9 @@ void game::game_settings::initialize_settings()
 	io_inactive_ticks = settings::io_inactive_ticks;
 	character_jump_velocity = settings::character_jump_velocity;
 	gravity_ticks = settings::gravity_ticks;
+	map_offsetting_min = settings::map_offsetting_min;
+	map_offsetting_max = settings::map_offsetting_max;
+	map_offset_threshold = settings::map_offset_threshold;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -102,6 +105,18 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		gravity_ticks = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("map-offsetting-min"))
+	{
+		map_offsetting_min = utils::runtime_utils::atoi(arg_value);
+	}
+	else if(CMP_ARG("map-offsetting-max"))
+	{
+		map_offsetting_max = utils::runtime_utils::atoi(arg_value);
+	}
+	else if(CMP_ARG("map-offset-threshold"))
+	{
+		map_offset_threshold = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -146,4 +161,19 @@ int game::game_settings::get_console_lines()
 int game::game_settings::get_io_inactive_ticks()
 {
 	return io_inactive_ticks;
+}
+
+int game::game_settings::get_map_offsetting_min()
+{
+	return map_offsetting_min;
+}
+
+int game::game_settings::get_map_offsetting_max()
+{
+	return map_offsetting_max;
+}
+
+int game::game_settings::get_map_offset_threshold()
+{
+	return map_offset_threshold;
 }

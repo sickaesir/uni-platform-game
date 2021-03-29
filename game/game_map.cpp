@@ -4,6 +4,7 @@
 #include "../utils/memory_utils.hpp"
 #include "game_io.hpp"
 #include "../utils/runtime_utils.hpp"
+#include "game_settings.hpp"
 
 game::game_map::game_map(game_component* parent, int _game_height, int _game_width, int _wall_padding) : 
 	game_component(parent, "game_map"),
@@ -36,7 +37,7 @@ void game::game_map::extend_map()
 		for(int i = 0; i < map_height; i++)
 		{
 			map_text[i] = new char[game_width + 1];
-			utils::memory_utils::memory_set(map_text[i], ' ', game_width);
+			utils::memory_utils::memory_set<char>(map_text[i], ' ', game_width);
 			map_text[i][game_width] = 0x00;
 		}
 		map_width = game_width;
@@ -48,7 +49,7 @@ void game::game_map::extend_map()
 		for(int i = 0; i < map_height; i++)
 		{
 			old_map[i] = new char[map_width];
-			utils::memory_utils::memory_copy(old_map[i], map_text[i], map_width);
+			utils::memory_utils::memory_copy<char>(old_map[i], map_text[i], map_width);
 			delete[] map_text[i];
 		}
 
@@ -57,8 +58,8 @@ void game::game_map::extend_map()
 		for(int i = 0; i < map_height; i++)
 		{
 			map_text[i] = new char[map_width + 1];
-			utils::memory_utils::memory_copy(map_text[i], old_map[i], map_width - game_width);
-			utils::memory_utils::memory_set(map_text[i] + map_width - game_width, ' ', game_width);
+			utils::memory_utils::memory_copy<char>(map_text[i], old_map[i], map_width - game_width);
+			utils::memory_utils::memory_set<char>(map_text[i] + map_width - game_width, ' ', game_width);
 			delete[] old_map[i];
 			map_text[i][map_width] = 0x00;
 		}
@@ -135,7 +136,7 @@ bool game::game_map::on_keyboard(int character)
 void game::game_map::increment_map_offset()
 {
 	map_offset++;
-	if(map_width - map_offset < 100)
+	if(map_width - map_offset < get_game_settings()->get_map_offset_threshold())
 		extend_map();
 }
 

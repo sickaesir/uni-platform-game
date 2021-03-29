@@ -84,8 +84,8 @@ void game::game::write_log(const char* format, va_list args)
 
 	int buf_len = utils::runtime_utils::strlen(buffer);
 	char* allocation = new char[buf_len + 1];
-	utils::runtime_utils::memset_zero(allocation, buf_len + 1);
-	utils::runtime_utils::memcpy(allocation, buffer, buf_len);
+	utils::memory_utils::memory_set_zero(allocation, buf_len + 1);
+	utils::memory_utils::memory_copy(allocation, buffer, buf_len);
 
 	console_lines.add(allocation);
 	while(console_lines.get_size() > settings->get_console_lines())

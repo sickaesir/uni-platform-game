@@ -17,6 +17,9 @@ namespace game
 		int get_io_inactive_ticks();
 		int get_character_jump_velocity();
 		int get_gravity_ticks();
+		int get_map_offsetting_min();
+		int get_map_offsetting_max();
+		int get_map_offset_threshold();
 
 	private:
 		void initialize_settings();
@@ -33,6 +36,9 @@ namespace game
 		int character_jump_velocity;
 		bool console_mode;
 		int gravity_ticks;
+		int map_offsetting_min;
+		int map_offsetting_max;
+		int map_offset_threshold;
 		char* game_path;
 	};
 }

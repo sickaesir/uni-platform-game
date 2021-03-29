@@ -202,7 +202,7 @@ void game::game_character::on_right_arrow()
 		return;
 	}
 
-	if(pos_x() >= get_game_settings()->get_game_width() - 20)
+	if(pos_x() >= get_game_settings()->get_game_width() - get_game_settings()->get_map_offsetting_max())
 	{
 		game_map* map = get_game_map();
 		map->increment_map_offset();
@@ -229,7 +229,7 @@ void game::game_character::on_left_arrow()
 	if(check_game_collision(pos_x() - 1, pos_y()))
 		return;
 
-	if(pos_x() <= 10 && get_game_map()->get_map_offset())
+	if(pos_x() <= get_game_settings()->get_map_offsetting_min() && get_game_map()->get_map_offset())
 	{
 		get_game_map()->decrement_map_offset();
 		return;

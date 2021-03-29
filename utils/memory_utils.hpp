@@ -18,6 +18,13 @@ namespace utils
 				destination[i] = value;
 		}
 
+		template<typename data_t>
+		inline static void memory_set_zero(data_t* destination, int count)
+		{
+			for(int i = 0; i < count; i++)
+				destination[i] = 0x00;
+		}
+
 		// sizeof(val_t) <= 4
 		template<typename val_t>
 		inline static unsigned int djb2_hash(const val_t& value)
