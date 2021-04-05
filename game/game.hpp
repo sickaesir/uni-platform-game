@@ -24,6 +24,9 @@ namespace game
 		void write_log(const char* format, va_list args);
 		unsigned int get_tick_count();
 
+		unsigned int urandom_number();
+		unsigned int urandom_number(unsigned int min, unsigned int max);
+
 	private:
 		void render_console();
 

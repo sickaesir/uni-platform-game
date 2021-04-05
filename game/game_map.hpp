@@ -19,7 +19,7 @@ namespace game
 		virtual void tick() override;
 		virtual void render() override;
 		virtual bool on_keyboard(int character) override;
-		virtual bool check_collision(game_component* requester, int x, int y) override;
+		virtual game_component* check_collision(game_component* requester, int x, int y) override;
 
 		int get_map_offset();
 		void increment_map_offset();
@@ -27,6 +27,7 @@ namespace game
 
  	private:
 		void extend_map();
+		void generate_rock(unsigned int x_offset);
 
 	private:
 		char** map_text;
@@ -36,5 +37,6 @@ namespace game
 		int game_width;
 		int wall_padding;
 		int map_offset;
+		int rocks_to_generate;
 	};
 }

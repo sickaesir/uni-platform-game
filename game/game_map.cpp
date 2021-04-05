@@ -5,6 +5,7 @@
 #include "game_io.hpp"
 #include "../utils/runtime_utils.hpp"
 #include "game_settings.hpp"
+#include "game_rock.hpp"
 
 game::game_map::game_map(game_component* parent, int _game_height, int _game_width, int _wall_padding) : 
 	game_component(parent, "game_map"),
@@ -13,7 +14,8 @@ game::game_map::game_map(game_component* parent, int _game_height, int _game_wid
 	game_width(_game_width),
 	game_height(_game_height),
 	wall_padding(_wall_padding),
-	map_offset(0)
+	map_offset(0),
+	rocks_to_generate(0)
 {
 	extend_map();
 }
@@ -93,15 +95,33 @@ void game::game_map::extend_map()
 	}
 
 	log("map expanded, x axis is now %d unit long", map_width);
+
+	rocks_to_generate += map_width / game_width;
 }
 
-bool game::game_map::check_collision(game_component* requester, int x, int y)
+void game::game_map::generate_rock(unsigned int x_offset)
+{
+	if(!rocks_to_generate)
+		return;
+
+	int rock_index = get_game_instance()->urandom_number(0, sprites::rocks_count - 1);
+	game_rock* rock = new game_rock(this, rock_index);
+	int x = get_game_instance()->urandom_number(x_offset + wall_padding, x_offset + map_width - rock->get_rock_width());
+	int y = get_game_instance()->urandom_number(wall_padding, map_height - wall_padding - rock->get_rock_height());
+	rock->pos_x(x);
+	rock->pos_y(y);
+	add_component(rock);
+	log("added rock component at x:%d y:%d idx:%d", x, y, rock_index);
+	rocks_to_generate--;
+}
+
+game::game_component* game::game_map::check_collision(game_component* requester, int x, int y)
 {
 	if(x < wall_padding || y < wall_padding)
-		return true;
+		return this;
 
 	if(y > map_height - wall_padding - 1)
-		return true;
+		return this;
 
 	return game_component::check_collision(requester, x, y);
 }
@@ -121,6 +141,8 @@ void game::game_map::render()
 	for(int i = 0; i < map_height; i++)
 		for(int c = 0, k = map_offset; k < game_width + map_offset + 1; k++, c++)
 			get_game_io()->draw(c, i, k % 4 ? console::color::magenta : console::color::cyan, false, map_text[i][k]);
+
+	game_component::render();
 }
 
 void game::game_map::tick()
@@ -137,7 +159,10 @@ void game::game_map::increment_map_offset()
 {
 	map_offset++;
 	if(map_width - map_offset < get_game_settings()->get_map_offset_threshold())
+	{
 		extend_map();
+	}
+	generate_rock(map_width - game_width);
 }
 
 void game::game_map::decrement_map_offset()

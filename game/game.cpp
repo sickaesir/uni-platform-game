@@ -6,6 +6,7 @@
 #include "game_settings.hpp"
 #include "game_character.hpp"
 #include "../utils/runtime_utils.hpp"
+#include "../utils/memory_utils.hpp"
 
 game::game::game(int argc, char** argv) : game_component(nullptr, "game"),
 	running(true),
@@ -103,4 +104,14 @@ game::game_settings* game::game::get_settings()
 game::game_io* game::game::get_io()
 {
 	return io;
+}
+
+unsigned int game::game::urandom_number()
+{
+	return utils::memory_utils::djb2_hash(get_tick_count());
+}
+
+unsigned int game::game::urandom_number(unsigned int min, unsigned int max)
+{
+	return min + (urandom_number() % (max - min + 1));
 }

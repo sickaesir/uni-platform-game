@@ -22,7 +22,7 @@ namespace game
 		virtual void render();
 		virtual void tick();
 		virtual bool on_keyboard(int character);
-		virtual bool check_collision(game_component* requester, int x, int y);
+		virtual game_component* check_collision(game_component* requester, int x, int y);
 		void log(const char* format, ...);
 
 	public:
@@ -32,7 +32,7 @@ namespace game
 		class game* get_game_instance();
 		class game_settings* get_game_settings();
 		class game_io* get_game_io();
-		bool check_game_collision(int x, int y);
+		game_component* check_game_collision(int x, int y);
 		int get_children_count();
 		game_component* get_child(int index);
 		unsigned int get_tick_count();

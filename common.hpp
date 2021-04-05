@@ -38,3 +38,18 @@ namespace console
 		white
 	};
 };
+
+namespace sprites
+{
+	constexpr unsigned int rocks_count = 2;
+	constexpr const char* rocks[] = {
+		"/=======-=======\\\n" \
+		"|               |\n" \
+		"\\___        ___/\n" \
+		"     \\     /    \n" \
+		"      -----      ",
+
+		"-===-===-===-===-\n" \
+		"=================",
+	};
+};
