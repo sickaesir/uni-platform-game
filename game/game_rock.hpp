@@ -11,6 +11,7 @@ namespace game
 
 	public:
 		virtual void render() override;
+		virtual game_component* check_collision(game_component* requester, int x, int y) override;
 
 		int get_rock_height();
 		int get_rock_width();

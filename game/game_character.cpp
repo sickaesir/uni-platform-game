@@ -32,18 +32,22 @@ void game::game_character::jump_tick()
 
 	if(!jump_velocity)
 	{
-		if(check_game_collision(pos_x(), pos_y() + 1))
-			return;
+		for(int i = 0; i < 3; i++)
+			if(check_game_collision(pos_x() + i, pos_y() + 1))
+				return;
 //		log("no collision at y:%d, descending by 1 unit", pos_y() + 1);
 		pos_y(pos_y() + 1);
 		return;
 	}
 
-	if(check_game_collision(pos_x(), pos_y() - 3))
+	for(int i = 0; i < 3; i++)
 	{
-		log("found collision at next y (%d), jump aborted", pos_y() - 1);
-		jump_velocity = 0;
-		return;
+		if(check_game_collision(pos_x() + i, pos_y() - 3))
+		{
+			log("found collision at next y(%d), jump aborted", pos_y() - 1);
+			jump_velocity = 0;
+			return;
+		}
 	}
 
 	jump_velocity--;
@@ -209,6 +213,10 @@ void game::game_character::on_right_arrow()
 		return;
 	}
 
+	for(int i = 0; i < 2; i++)
+		if(check_game_collision(pos_x() + i, pos_y()))
+			return;
+
 	pos_x(pos_x() + 1);
 }
 
@@ -226,8 +234,9 @@ void game::game_character::on_left_arrow()
 		break;
 	}
 
-	if(check_game_collision(pos_x() - 1, pos_y()))
-		return;
+	for(int i = -1; i < 1; i++)
+		if(check_game_collision(pos_x() + i, pos_y()))
+			return;
 
 	if(pos_x() <= get_game_settings()->get_map_offsetting_min() && get_game_map()->get_map_offset())
 	{
