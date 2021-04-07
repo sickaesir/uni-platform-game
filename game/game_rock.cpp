@@ -78,7 +78,7 @@ game::game_component* game::game_rock::check_collision(game_component* requester
 //				continue;
 
 			int render_x = pos_x() + rx - get_game_map()->get_map_offset();
-			if(render_x < 0 || render_x > get_game_settings()->get_game_width())
+			if(render_x < 0 /*|| render_x > get_game_settings()->get_game_width()*/)
 				continue;
 
 			int render_y = pos_y() + ry;

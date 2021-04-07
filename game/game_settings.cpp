@@ -21,6 +21,8 @@ void game::game_settings::initialize_settings()
 	map_offsetting_min = settings::map_offsetting_min;
 	map_offsetting_max = settings::map_offsetting_max;
 	map_offset_threshold = settings::map_offset_threshold;
+	rocks_gen_count = settings::rocks_gen_count;
+	rock_gen_collision_padding = settings::rock_gen_collision_padding;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -117,6 +119,14 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		map_offset_threshold = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("rocks-gen-count"))
+	{
+		rocks_gen_count = utils::runtime_utils::atoi(arg_value);
+	}
+	else if(CMP_ARG("rock-gen-collision-padding"))
+	{
+		rock_gen_collision_padding = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -176,4 +186,14 @@ int game::game_settings::get_map_offsetting_max()
 int game::game_settings::get_map_offset_threshold()
 {
 	return map_offset_threshold;
+}
+
+int game::game_settings::get_rocks_gen_count()
+{
+	return rocks_gen_count;
+}
+
+int game::game_settings::get_rock_gen_collision_padding()
+{
+	return rock_gen_collision_padding;
 }

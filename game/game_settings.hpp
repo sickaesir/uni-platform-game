@@ -20,6 +20,8 @@ namespace game
 		int get_map_offsetting_min();
 		int get_map_offsetting_max();
 		int get_map_offset_threshold();
+		int get_rocks_gen_count();
+		int get_rock_gen_collision_padding();
 
 	private:
 		void initialize_settings();
@@ -39,6 +41,8 @@ namespace game
 		int map_offsetting_min;
 		int map_offsetting_max;
 		int map_offset_threshold;
+		int rocks_gen_count;
+		int rock_gen_collision_padding;
 		char* game_path;
 	};
 }

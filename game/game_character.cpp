@@ -226,17 +226,17 @@ void game::game_character::on_right_arrow()
 		break;
 	}
 
+	for(int i = 0; i < 4; i++)
+		for(int j = 0; j < 3; j++)
+			if(check_game_collision(pos_x() + i, pos_y() - j))
+				return;
+
 	if(pos_x() >= get_game_settings()->get_game_width() - get_game_settings()->get_map_offsetting_max())
 	{
 		game_map* map = get_game_map();
 		map->increment_map_offset();
 		return;
 	}
-
-	for(int i = 0; i < 4; i++)
-		for(int j = 0; j < 2; j++)
-			if(check_game_collision(pos_x() + i, pos_y() - j))
-				return;
 
 	pos_x(pos_x() + 1);
 }
@@ -255,8 +255,9 @@ void game::game_character::on_left_arrow()
 		break;
 	}
 
-	for(int i = -1; i < 1; i++)
-		if(check_game_collision(pos_x() + i, pos_y()))
+	for(int i = -1; i < 2; i++)
+		for(int j = 0; j < 3; j++)
+		if(check_game_collision(pos_x() + i, pos_y() - j))
 			return;
 
 	if(pos_x() <= get_game_settings()->get_map_offsetting_min() && get_game_map()->get_map_offset())

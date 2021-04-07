@@ -96,7 +96,7 @@ void game::game_map::extend_map()
 
 	log("map expanded, x axis is now %d unit long", map_width);
 
-	rocks_to_generate += map_width / game_width;
+	rocks_to_generate += get_game_settings()->get_rocks_gen_count();
 }
 
 void game::game_map::generate_rock(unsigned int x_offset)
@@ -106,12 +106,27 @@ void game::game_map::generate_rock(unsigned int x_offset)
 
 	int rock_index = get_game_instance()->urandom_number(0, sprites::rocks_count - 1);
 	game_rock* rock = new game_rock(this, rock_index);
+
 	int x = get_game_instance()->urandom_number(x_offset + wall_padding, x_offset + map_width - rock->get_rock_width());
 	int y = get_game_instance()->urandom_number(wall_padding, map_height - wall_padding - rock->get_rock_height());
 	rock->pos_x(x);
 	rock->pos_y(y);
+
+	int padding = get_game_settings()->get_rock_gen_collision_padding();
+	for(int rx = -padding; rx < rock->get_rock_width() + padding; rx++)
+	{
+		for(int ry = -padding; ry < rock->get_rock_height() + padding; ry++)
+		{
+			if(get_game_instance()->check_collision(rock, x + rx - map_offset, y + ry))
+			{
+				delete rock;
+				return;
+			}
+		}
+
+	}
+
 	add_component(rock);
-	log("added rock component at x:%d y:%d idx:%d", x, y, rock_index);
 	rocks_to_generate--;
 }
 
