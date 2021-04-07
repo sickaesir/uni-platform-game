@@ -35,7 +35,16 @@ void game::game_character::jump_tick()
 		for(int i = 0; i < 3; i++)
 			if(check_game_collision(pos_x() + i, pos_y() + 1))
 				return;
-//		log("no collision at y:%d, descending by 1 unit", pos_y() + 1);
+		switch(get_direction())
+		{
+			case game_component::direction_type::right:
+				on_right_arrow();
+			break;
+			case game_component::direction_type::left:
+				on_left_arrow();
+			break;
+		}
+
 		pos_y(pos_y() + 1);
 		return;
 	}
@@ -51,6 +60,17 @@ void game::game_character::jump_tick()
 	}
 
 	jump_velocity--;
+
+	switch(get_direction())
+	{
+		case game_component::direction_type::right:
+			on_right_arrow();
+		break;
+		case game_component::direction_type::left:
+			on_left_arrow();
+		break;
+	}
+
 	pos_y(pos_y() - 1);
 
 	if(!jump_velocity)
@@ -199,11 +219,11 @@ void game::game_character::on_right_arrow()
 		case game_component::direction_type::left:
 			log("direction is now none");
 			set_direction(game_component::direction_type::none);
-		return;
+		break;
 		case game_component::direction_type::none:
 			log("direction is now right");
 			set_direction(game_component::direction_type::right);
-		return;
+		break;
 	}
 
 	if(pos_x() >= get_game_settings()->get_game_width() - get_game_settings()->get_map_offsetting_max())
@@ -213,9 +233,10 @@ void game::game_character::on_right_arrow()
 		return;
 	}
 
-	for(int i = 0; i < 2; i++)
-		if(check_game_collision(pos_x() + i, pos_y()))
-			return;
+	for(int i = 0; i < 4; i++)
+		for(int j = 0; j < 2; j++)
+			if(check_game_collision(pos_x() + i, pos_y() - j))
+				return;
 
 	pos_x(pos_x() + 1);
 }
