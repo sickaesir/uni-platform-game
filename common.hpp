@@ -44,7 +44,7 @@ namespace console
 
 namespace sprites
 {
-	constexpr unsigned int rocks_count = 4; // amount of rock sprites defined in sprites::rocks array
+	constexpr unsigned int rocks_count = 5; // amount of rock sprites defined in sprites::rocks array
 	constexpr const char* rocks[] = {
 		"/=======-=======\\\n" \
 		"|               |\n" \
@@ -61,5 +61,10 @@ namespace sprites
 		"|=====================|\n" \
 		"   |===============|   \n" \
 		"      |=========|      ",
+
+		"(================)\n" \
+		" (-:-:-:-:-:-:-:) \n" \
+		"   (:-:-:-:-:-)   \n" \
+		"        vvv        "
 	};
 };
