@@ -67,4 +67,13 @@ namespace sprites
 		"   (:-:-:-:-:-)   \n" \
 		"        vvv        "
 	};
+
+	constexpr unsigned int lasers_count = 5;
+	constexpr const char* lasers[] = {
+		"-------->",
+		"========>",
+		"^-v-^-v-^-->",
+		">>>>>>>>>>>>",
+		"-:-:-:-:-:-:-:-:->"
+	};
 };
