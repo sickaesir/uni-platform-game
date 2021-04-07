@@ -6,6 +6,7 @@
 
 game::game_character::game_character(game_component* parent) : game_component(parent, "game_character")
 	, jump_velocity(0)
+	, life(get_game_settings()->get_max_character_life())
 {
 }
 
@@ -100,6 +101,29 @@ void game::game_character::render()
 	render_right_arm();
 	render_left_leg();
 	render_right_leg();
+	render_life();
+}
+
+void game::game_character::render_life()
+{
+	float character_life_percentage = life / (float)get_game_settings()->get_max_character_life();
+	int bars_to_render = (character_life_percentage * 25.0f / 7);
+
+	console::color bar_color = console::color::cyan;
+	switch(bars_to_render)
+	{
+		case 2: bar_color = console::color::green; break;
+		case 1: bar_color = console::color::yellow; break;
+		case 0: bar_color = console::color::red; break;
+	}
+
+	get_game_io()->draw(pos_x() + 1, pos_y() - 3, bar_color, true, '=');
+
+	for(int i = 0; i < bars_to_render; i++)
+	{
+		get_game_io()->draw(pos_x() - i, pos_y() - 3, bar_color, true, '=');
+		get_game_io()->draw(pos_x() + 2 + i, pos_y() - 3, bar_color, true, '=');
+	}
 }
 
 void game::game_character::render_head()
@@ -170,10 +194,18 @@ void game::game_character::render_right_leg()
 
 bool game::game_character::on_keyboard(int character)
 {
+
 	switch(character)
 	{
 		case -1: // no key pressed
 		{
+		}
+		break;
+
+		case 0x20:
+		{
+			// TODO: shoot
+			return true;
 		}
 		break;
 

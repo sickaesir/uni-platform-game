@@ -22,6 +22,7 @@ namespace game
 		void render_right_arm();
 		void render_left_leg();
 		void render_right_leg();
+		void render_life();
 
 		void on_right_arrow();
 		void on_left_arrow();
@@ -33,5 +34,6 @@ namespace game
 
 	private:
 		int jump_velocity;
+		int life;
 	};
 }

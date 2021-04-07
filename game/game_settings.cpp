@@ -23,6 +23,7 @@ void game::game_settings::initialize_settings()
 	map_offset_threshold = settings::map_offset_threshold;
 	rocks_gen_count = settings::rocks_gen_count;
 	rock_gen_collision_padding = settings::rock_gen_collision_padding;
+	max_character_life = settings::max_character_life;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -127,6 +128,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		rock_gen_collision_padding = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("max-character-life"))
+	{
+		max_character_life = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -196,4 +201,9 @@ int game::game_settings::get_rocks_gen_count()
 int game::game_settings::get_rock_gen_collision_padding()
 {
 	return rock_gen_collision_padding;
+}
+
+int game::game_settings::get_max_character_life()
+{
+	return max_character_life;
 }

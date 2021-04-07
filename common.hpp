@@ -23,6 +23,7 @@ namespace settings
 	constexpr const int map_offset_threshold = 100; // limit after which the game map gets extended
 	constexpr const int rocks_gen_count = 10; // amount of rocks to generate at every map chunk
 	constexpr const int rock_gen_collision_padding = 3; // distance between other components for a collision free rock
+	constexpr const int max_character_life = 100; // max life points for the main game character
 };
 
 // console settings
