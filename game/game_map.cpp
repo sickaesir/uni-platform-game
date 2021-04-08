@@ -177,7 +177,7 @@ void game::game_map::increment_map_offset()
 	{
 		extend_map();
 	}
-	generate_rock(map_width - game_width);
+	generate_rock(map_width - game_width + map_offset);
 }
 
 void game::game_map::decrement_map_offset()

@@ -25,6 +25,7 @@ namespace game
 		int get_max_character_life();
 		int get_character_reattack_ticks();
 		int get_powerup_heal_amount();
+		int get_powerup_max_gen_amount();
 
 	private:
 		void initialize_settings();
@@ -49,6 +50,7 @@ namespace game
 		int max_character_life;
 		int character_reattack_ticks;
 		int powerup_heal_amount;
+		int powerup_max_gen_amount;
 		char* game_path;
 	};
 }

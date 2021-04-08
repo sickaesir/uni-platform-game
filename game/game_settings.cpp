@@ -26,6 +26,7 @@ void game::game_settings::initialize_settings()
 	max_character_life = settings::max_character_life;
 	character_reattack_ticks = settings::character_reattack_ticks;
 	powerup_heal_amount = settings::powerup_heal_amount;
+	powerup_max_gen_amount = settings::powerup_max_gen_amount;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -142,6 +143,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		powerup_heal_amount = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("powerup-max-gen-amount"))
+	{
+		powerup_max_gen_amount = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -226,4 +231,9 @@ int game::game_settings::get_character_reattack_ticks()
 int game::game_settings::get_powerup_heal_amount()
 {
 	return powerup_heal_amount;
+}
+
+int game::game_settings::get_powerup_max_gen_amount()
+{
+	return powerup_max_gen_amount;
 }

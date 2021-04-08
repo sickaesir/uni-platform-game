@@ -26,6 +26,7 @@ namespace settings
 	constexpr const int max_character_life = 100; // max life points for the main game character
 	constexpr const int character_reattack_ticks = 300; // ticks between every character shot
 	constexpr const int powerup_heal_amount = 10; // amount of life points healed by heal powerup
+	constexpr const int powerup_max_gen_amount = 1; // maximum amount of powerup to generate at each map extension
 };
 
 // console settings
