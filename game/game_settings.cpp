@@ -25,6 +25,7 @@ void game::game_settings::initialize_settings()
 	rock_gen_collision_padding = settings::rock_gen_collision_padding;
 	max_character_life = settings::max_character_life;
 	character_reattack_ticks = settings::character_reattack_ticks;
+	powerup_heal_amount = settings::powerup_heal_amount;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -137,6 +138,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		character_reattack_ticks = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("powerup-heal-amount"))
+	{
+		powerup_heal_amount = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -216,4 +221,9 @@ int game::game_settings::get_max_character_life()
 int game::game_settings::get_character_reattack_ticks()
 {
 	return character_reattack_ticks;
+}
+
+int game::game_settings::get_powerup_heal_amount()
+{
+	return powerup_heal_amount;
 }

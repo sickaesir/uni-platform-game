@@ -8,7 +8,7 @@
 #include "game_rock.hpp"
 
 game::game_map::game_map(game_component* parent, int _game_height, int _game_width, int _wall_padding) : 
-	game_component(parent, "game_map"),
+	game_component(parent, game_component::component_type::map),
 	map_width(0),
 	map_height(0),
 	game_width(_game_width),

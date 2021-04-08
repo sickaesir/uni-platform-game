@@ -5,11 +5,11 @@
 #include "game_settings.hpp"
 #include "game_io.hpp"
 
-game::game_component::game_component(game_component* parent, const char* name) :
+game::game_component::game_component(game_component* parent, component_type _type) :
 	parent_component(parent),
-	component_name(name),
 	position(0, 0),
-	direction(direction_type::none)
+	direction(direction_type::none),
+	type(_type)
 {
 }
 
@@ -56,13 +56,33 @@ game::game_io* game::game_component::get_game_io()
 	return game_instance->get_io();
 }
 
+game::game_component::component_type game::game_component::get_type()
+{
+	return type;
+}
+
+const char* game::game_component::get_type_str()
+{
+	switch(get_type())
+	{
+		case component_type::game: return "game";
+		case component_type::character: return "character";
+		case component_type::io: return "io";
+		case component_type::laser: return "laser";
+		case component_type::map: return "map";
+		case component_type::rock: return "rock";
+		case component_type::powerup: return "powerup";
+		default: return "n/a";
+	}
+}
+
 void game::game_component::log(const char* format, ...)
 {
 	game* game_instance = get_game_instance();
 	if(!game_instance) return;
 
 	char buffer[256];
-	sprintf(buffer, "[%s] [0x%p] %s", component_name, this, format);
+	sprintf(buffer, "[%s] [0x%p] %s", get_type_str(), this, format);
 
 	va_list args;
 	va_start(args, format);

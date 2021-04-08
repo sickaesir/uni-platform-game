@@ -25,6 +25,7 @@ namespace settings
 	constexpr const int rock_gen_collision_padding = 3; // distance between other components for a collision free rock
 	constexpr const int max_character_life = 100; // max life points for the main game character
 	constexpr const int character_reattack_ticks = 300; // ticks between every character shot
+	constexpr const int powerup_heal_amount = 10; // amount of life points healed by heal powerup
 };
 
 // console settings

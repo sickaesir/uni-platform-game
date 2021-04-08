@@ -7,7 +7,7 @@
 #include "game.hpp"
 
 game::game_laser::game_laser(game_component* parent, int laser_type) : 
-	game_component(parent, "game_laser"),
+	game_component(parent, game_component::component_type::laser),
 	type(laser_type),
 	collision_point({0, 0}),
 	collided(false)
@@ -43,17 +43,25 @@ void game::game_laser::tick()
 	}
 	else
 	{
-		for(int i = 0; i < get_laser_length(); i++)
-		{
-			int x = pos_x() + i;
-			game_component* collided_component = check_game_collision(x, pos_y());
-			if(!collided_component) continue;
+		int x = 0;
 
+		switch(get_direction())
+		{
+			case game_component::direction_type::right:
+				x = pos_x() + get_laser_length();
+			break;
+			case game_component::direction_type::left:
+				x = pos_x();
+			break;
+		}
+
+		game_component* collided_component = check_game_collision(x, pos_y());
+		if(collided_component)
+		{
 			collision_point.x(x);
 			collision_point.y(pos_y());
 			collided = true;
 			log("laser collided at x:%d y:%d", collision_point.x(), collision_point.y());
-			break;
 		}
 	}
 	if(get_game_instance()->get_tick_count() % 10 == 0)

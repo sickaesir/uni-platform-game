@@ -6,7 +6,7 @@
 #include "game_laser.hpp"
 #include "game.hpp"
 
-game::game_character::game_character(game_component* parent) : game_component(parent, "game_character")
+game::game_character::game_character(game_component* parent) : game_component(parent, game_component::component_type::character)
 	, jump_velocity(0)
 	, life(get_game_settings()->get_max_character_life())
 	, last_shoot_tick(0)

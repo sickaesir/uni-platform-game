@@ -2,7 +2,7 @@
 #include "game_io.hpp"
 #include "game_settings.hpp"
 
-game::game_io::game_io(game_component* parent) : game_component(parent, "game_input"),
+game::game_io::game_io(game_component* parent) : game_component(parent, game_component::component_type::io),
 	inactive_ticks_counter(0)
 {
 	raw();

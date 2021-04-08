@@ -24,6 +24,7 @@ namespace game
 		int get_rock_gen_collision_padding();
 		int get_max_character_life();
 		int get_character_reattack_ticks();
+		int get_powerup_heal_amount();
 
 	private:
 		void initialize_settings();
@@ -47,6 +48,7 @@ namespace game
 		int rock_gen_collision_padding;
 		int max_character_life;
 		int character_reattack_ticks;
+		int powerup_heal_amount;
 		char* game_path;
 	};
 }

@@ -6,7 +6,7 @@
 #include "game_settings.hpp"
 
 game::game_rock::game_rock(game_component* parent, int rock_index) :
-	game_component(parent, "game_rock")
+	game_component(parent, game_component::component_type::rock)
 {
 	parse_rock_by_index(rock_index);
 }

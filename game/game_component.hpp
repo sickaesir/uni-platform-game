@@ -15,9 +15,20 @@ namespace game
 			left
 		};
 
+		enum class component_type
+		{
+			game,
+			character,
+			io,
+			laser,
+			map,
+			rock,
+			powerup
+		};
+
 
 	public:
-		game_component(game_component* parent, const char* name);
+		game_component(game_component* parent, component_type _type);
 	public:
 		virtual void render();
 		virtual void tick();
@@ -38,6 +49,8 @@ namespace game
 		int get_children_count();
 		game_component* get_child(int index);
 		unsigned int get_tick_count();
+		component_type get_type();
+		const char* get_type_str();
 
 	public:
 		int pos_x();
@@ -50,10 +63,10 @@ namespace game
 
 	private:
 		game_component* parent_component;
-		const char* component_name;
 		data::data_vector<game_component*> children;
 		data::data_vector<game_component*> invalidated_children;
 		data::data_point position;
 		direction_type direction;
+		component_type type;
 	};
 }

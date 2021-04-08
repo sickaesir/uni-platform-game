@@ -8,7 +8,7 @@
 #include "../utils/runtime_utils.hpp"
 #include "../utils/memory_utils.hpp"
 
-game::game::game(int argc, char** argv) : game_component(nullptr, "game"),
+game::game::game(int argc, char** argv) : game_component(nullptr, game_component::component_type::game),
 	running(true),
 	tick_count(0)
 {
