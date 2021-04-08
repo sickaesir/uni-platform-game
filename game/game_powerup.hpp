@@ -9,7 +9,7 @@ namespace game
 		enum class powerup_type
 		{
 			heal = 0,
-			_count
+			_last
 		};
 	public:
 		game_powerup(game_component* parent, powerup_type _type);
@@ -20,5 +20,6 @@ namespace game
 
 	private:
 		powerup_type type;
+		bool descend;
 	};
 };

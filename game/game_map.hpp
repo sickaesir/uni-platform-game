@@ -27,8 +27,8 @@ namespace game
 
  	private:
 		void extend_map();
-		void generate_rock(unsigned int x_offset);
-
+		void generate_rocks();
+		void generate_powerups();
 	private:
 		char** map_text;
 		int map_height;
@@ -38,5 +38,6 @@ namespace game
 		int wall_padding;
 		int map_offset;
 		int rocks_to_generate;
+		int powerups_to_generate;
 	};
 }

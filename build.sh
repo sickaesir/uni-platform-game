@@ -1,6 +1,6 @@
 #!/bin/sh
 pkill uni-platform-game-bin
-gcc -g -pthread --std=c++17 -lstdc++ -lncursesw -o uni-platform-game-bin \
+g++ -g -pthread --std=c++17 -lstdc++ -lncursesw -o uni-platform-game-bin \
 	main.cpp \
 	data/data_point.cpp \
 	game/game_settings.cpp \

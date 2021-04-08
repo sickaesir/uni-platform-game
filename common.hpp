@@ -21,7 +21,7 @@ namespace settings
 	constexpr const int map_offsetting_min = 30; // character position after which the map offset starts to decrease
 	constexpr const int map_offsetting_max = 30; // character position after which the map offset starts to increase
 	constexpr const int map_offset_threshold = 100; // limit after which the game map gets extended
-	constexpr const int rocks_gen_count = 10; // amount of rocks to generate at every map chunk
+	constexpr const int rocks_gen_count = 20; // amount of rocks to generate at every map chunk
 	constexpr const int rock_gen_collision_padding = 3; // distance between other components for a collision free rock
 	constexpr const int max_character_life = 100; // max life points for the main game character
 	constexpr const int character_reattack_ticks = 300; // ticks between every character shot

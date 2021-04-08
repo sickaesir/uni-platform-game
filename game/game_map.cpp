@@ -6,8 +6,9 @@
 #include "../utils/runtime_utils.hpp"
 #include "game_settings.hpp"
 #include "game_rock.hpp"
+#include "game_powerup.hpp"
 
-game::game_map::game_map(game_component* parent, int _game_height, int _game_width, int _wall_padding) : 
+game::game_map::game_map(game_component* parent, int _game_height, int _game_width, int _wall_padding) :
 	game_component(parent, game_component::component_type::map),
 	map_width(0),
 	map_height(0),
@@ -15,7 +16,8 @@ game::game_map::game_map(game_component* parent, int _game_height, int _game_wid
 	game_height(_game_height),
 	wall_padding(_wall_padding),
 	map_offset(0),
-	rocks_to_generate(0)
+	rocks_to_generate(0),
+	powerups_to_generate(0)
 {
 	extend_map();
 }
@@ -96,13 +98,50 @@ void game::game_map::extend_map()
 
 	log("map expanded, x axis is now %d unit long", map_width);
 
-	rocks_to_generate += get_game_settings()->get_rocks_gen_count();
+	if(map_width != game_width)
+	{
+		rocks_to_generate += get_game_settings()->get_rocks_gen_count();
+		powerups_to_generate += get_game_settings()->get_powerup_max_gen_amount();
+	}
 }
 
-void game::game_map::generate_rock(unsigned int x_offset)
+
+void game::game_map::generate_powerups()
+{
+	if(!powerups_to_generate)
+		return;
+
+	unsigned int x_offset = map_width - game_width + map_offset;
+	game_powerup::powerup_type type = static_cast<game_powerup::powerup_type>(get_game_instance()->urandom_number(0, static_cast<unsigned int>(game_powerup::powerup_type::_last) - 1));
+	int x = get_game_instance()->urandom_number(x_offset + wall_padding, x_offset + map_width - 5);
+	int y = wall_padding + 5;
+
+	game_powerup* powerup = new game_powerup(this, type);
+	powerup->pos_x(x);
+	powerup->pos_y(y);
+
+	for(int rx = -3; rx < 3; rx++)
+	{
+		for(int ry = -3; ry < 3; ry++)
+		{
+			if(get_game_instance()->check_collision(powerup, x + rx, y + ry))
+			{
+				delete powerup;
+				return;
+			}
+		}
+	}
+
+	add_component(powerup);
+	powerups_to_generate--;
+}
+
+void game::game_map::generate_rocks()
 {
 	if(!rocks_to_generate)
 		return;
+
+	unsigned int x_offset = map_width - game_width + map_offset;
 
 	int rock_index = get_game_instance()->urandom_number(0, sprites::rocks_count - 1);
 	game_rock* rock = new game_rock(this, rock_index);
@@ -162,7 +201,9 @@ void game::game_map::render()
 
 void game::game_map::tick()
 {
-
+	generate_rocks();
+	generate_powerups();
+	game_component::tick();
 }
 
 bool game::game_map::on_keyboard(int character)
@@ -177,7 +218,6 @@ void game::game_map::increment_map_offset()
 	{
 		extend_map();
 	}
-	generate_rock(map_width - game_width + map_offset);
 }
 
 void game::game_map::decrement_map_offset()
