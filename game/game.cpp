@@ -72,7 +72,6 @@ void game::game::render()
 
 void game::game::render_console()
 {
-	move(settings->get_game_height(), 0);
 	for(int i = 0; i < console_lines.get_size(); i++)
 		io->draw(3, settings->get_game_height() + i, console::color::yellow, false, console_lines[i]);
 }
