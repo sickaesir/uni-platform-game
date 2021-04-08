@@ -108,7 +108,10 @@ game::game_io* game::game::get_io()
 
 unsigned int game::game::urandom_number()
 {
-	return utils::memory_utils::djb2_hash(get_tick_count());
+	int* entropy = new int;
+	unsigned int random = *entropy ^ utils::memory_utils::djb2_hash(get_tick_count());
+	delete entropy;
+	return random;
 }
 
 unsigned int game::game::urandom_number(unsigned int min, unsigned int max)

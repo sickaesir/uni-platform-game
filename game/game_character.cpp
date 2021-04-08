@@ -242,8 +242,19 @@ bool game::game_character::on_keyboard(int character)
 
 void game::game_character::on_jump()
 {
-	if(jump_velocity || !check_game_collision(pos_x(), pos_y() + 1))
+	if(jump_velocity)
 		return;
+
+	bool can_jump = false;
+	for(int i = 0; i < 3; i++)
+		if(check_game_collision(pos_x() + i, pos_y() + 1))
+			can_jump = true;
+
+	if(!can_jump)
+	{
+		log("no foot collision, skipping jump");
+		return;
+	}
 
 	jump_velocity = get_game_settings()->get_character_jump_velocity();
 	log("initialized jump with %d velocity units", jump_velocity);
