@@ -23,6 +23,7 @@ namespace game
 		int get_rocks_gen_count();
 		int get_rock_gen_collision_padding();
 		int get_max_character_life();
+		int get_character_reattack_ticks();
 
 	private:
 		void initialize_settings();
@@ -45,6 +46,7 @@ namespace game
 		int rocks_gen_count;
 		int rock_gen_collision_padding;
 		int max_character_life;
+		int character_reattack_ticks;
 		char* game_path;
 	};
 }

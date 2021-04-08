@@ -24,6 +24,7 @@ void game::game_settings::initialize_settings()
 	rocks_gen_count = settings::rocks_gen_count;
 	rock_gen_collision_padding = settings::rock_gen_collision_padding;
 	max_character_life = settings::max_character_life;
+	character_reattack_ticks = settings::character_reattack_ticks;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -132,6 +133,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		max_character_life = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("character-reattack-ticks"))
+	{
+		character_reattack_ticks = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -206,4 +211,9 @@ int game::game_settings::get_rock_gen_collision_padding()
 int game::game_settings::get_max_character_life()
 {
 	return max_character_life;
+}
+
+int game::game_settings::get_character_reattack_ticks()
+{
+	return character_reattack_ticks;
 }

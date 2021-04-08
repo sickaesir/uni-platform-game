@@ -72,6 +72,11 @@ void game::game_component::log(const char* format, ...)
 
 void game::game_component::tick()
 {
+	for(int i = 0; i < invalidated_children.get_size(); i++)
+	{
+		remove_component(invalidated_children[i]);
+	}
+
 	children.for_each([](int idx, game_component* component) {
 		if(!component) return;
 		component->tick();
@@ -171,4 +176,19 @@ unsigned int game::game_component::get_tick_count()
 	if(!game_instance) return 0;
 
 	return game_instance->get_tick_count();
+}
+
+void game::game_component::remove_component(game_component* component)
+{
+	for(int i = 0; i < get_children_count(); i++)
+	{
+		if(children[i] == component)
+			children.remove_at(i);
+	}
+}
+
+void game::game_component::invalidate()
+{
+	if(!parent_component) return;
+	parent_component->invalidated_children.add(this);
 }

@@ -24,6 +24,7 @@ namespace settings
 	constexpr const int rocks_gen_count = 10; // amount of rocks to generate at every map chunk
 	constexpr const int rock_gen_collision_padding = 3; // distance between other components for a collision free rock
 	constexpr const int max_character_life = 100; // max life points for the main game character
+	constexpr const int character_reattack_ticks = 300; // ticks between every character shot
 };
 
 // console settings
@@ -70,10 +71,15 @@ namespace sprites
 
 	constexpr unsigned int lasers_count = 5;
 	constexpr const char* lasers[] = {
-		"-------->",
-		"========>",
+		"--->",
+		"<---",
+		"======>",
+		"<======",
 		"^-v-^-v-^-->",
-		">>>>>>>>>>>>",
-		"-:-:-:-:-:-:-:-:->"
+		"<--^-v-^-v-^",
+		">>>>>>>>>>>>>>>>",
+		"<<<<<<<<<<<<<<<<",
+		"-:-:-:-:-:-:-:-:-:-:->",
+		"<-:-:-:-:-:-:-:-:-:-:-"
 	};
 };

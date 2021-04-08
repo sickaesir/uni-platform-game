@@ -3,10 +3,13 @@
 #include "game_settings.hpp"
 #include "game_io.hpp"
 #include "game_map.hpp"
+#include "game_laser.hpp"
+#include "game.hpp"
 
 game::game_character::game_character(game_component* parent) : game_component(parent, "game_character")
 	, jump_velocity(0)
 	, life(get_game_settings()->get_max_character_life())
+	, last_shoot_tick(0)
 {
 }
 
@@ -24,6 +27,7 @@ void game::game_character::tick()
 	}
 
 	jump_tick();
+	game_component::tick();
 }
 
 void game::game_character::jump_tick()
@@ -102,6 +106,8 @@ void game::game_character::render()
 	render_left_leg();
 	render_right_leg();
 	render_life();
+
+	game_component::render();
 }
 
 void game::game_character::render_life()
@@ -194,7 +200,6 @@ void game::game_character::render_right_leg()
 
 bool game::game_character::on_keyboard(int character)
 {
-
 	switch(character)
 	{
 		case -1: // no key pressed
@@ -204,7 +209,7 @@ bool game::game_character::on_keyboard(int character)
 
 		case 0x20:
 		{
-			// TODO: shoot
+			on_shoot();
 			return true;
 		}
 		break;
@@ -300,4 +305,23 @@ void game::game_character::on_left_arrow()
 
 	pos_x(pos_x() - 1);
 
+}
+
+void game::game_character::on_shoot()
+{
+	if(get_game_instance()->get_tick_count() - last_shoot_tick < get_game_settings()->get_character_reattack_ticks())
+		return;
+
+	last_shoot_tick = get_game_instance()->get_tick_count();
+
+	log("created laser");
+	game_laser* laser = new game_laser(this, 4);
+	laser->pos_y(pos_y() - 1);
+	laser->set_direction(get_direction());
+
+	if(get_direction() == game_component::direction_type::left)
+		laser->pos_x(pos_x() - laser->get_laser_length());
+	else
+		laser->pos_x(pos_x() + 2);
+	add_component(laser);
 }

@@ -30,10 +30,12 @@ namespace game
 		void initialize_position();
 
 		void on_jump();
+		void on_shoot();
 		void jump_tick();
 
 	private:
 		int jump_velocity;
 		int life;
+		int last_shoot_tick;
 	};
 }
