@@ -37,21 +37,26 @@ void game::game_powerup::render()
 	if(render_x >= 0 && render_x <= get_game_settings()->get_game_width())
 	{
 		get_game_io()->draw(render_x, pos_y(), console::color::yellow, true, '/');
-		get_game_io()->draw(render_x, pos_y() + 1, console::color::green, true, get_tick_count() % 2 ? '|' : '-');
+		get_game_io()->draw(render_x, pos_y() + 1, console::color::green, true, get_tick_count() % 2 || !descend ? '|' : '-');
 		get_game_io()->draw(render_x, pos_y() + 2, console::color::yellow, true, '\\');
 	}
 
 	if(render_x + 1 >= 0 && render_x + 1 <= get_game_settings()->get_game_width())
 	{
-		get_game_io()->draw(render_x + 1, pos_y(), console::color::green, true, get_tick_count() % 2 ? '-' : '|');
+		get_game_io()->draw(render_x + 1, pos_y(), console::color::green, true, get_tick_count() % 2 || !descend ? '-' : '|');
 		get_game_io()->draw(render_x + 1, pos_y() + 1, console::color::white, true, powerup_symbol);
-		get_game_io()->draw(render_x + 1, pos_y() + 2, console::color::green, true, get_tick_count() % 2 ? '-' : '|');
+		get_game_io()->draw(render_x + 1, pos_y() + 2, console::color::green, true, get_tick_count() % 2 || !descend ? '-' : '|');
 	}
 
 	if(render_x + 2 >= 0 && render_x + 2 <= get_game_settings()->get_game_width())
 	{
 		get_game_io()->draw(render_x + 2, pos_y(), console::color::yellow, true, '\\');
-		get_game_io()->draw(render_x + 2, pos_y() + 1, console::color::green, true, get_tick_count() % 2 ? '|' : '-');
+		get_game_io()->draw(render_x + 2, pos_y() + 1, console::color::green, true, get_tick_count() % 2 || !descend ? '|' : '-');
 		get_game_io()->draw(render_x + 2, pos_y() + 2, console::color::yellow, true, '/');
 	}
+}
+
+game::game_powerup::powerup_type game::game_powerup::get_type()
+{
+	return type;
 }

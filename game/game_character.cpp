@@ -5,6 +5,7 @@
 #include "game_map.hpp"
 #include "game_laser.hpp"
 #include "game.hpp"
+#include "game_powerup.hpp"
 
 game::game_character::game_character(game_component* parent) : game_component(parent, game_component::component_type::character)
 	, jump_velocity(0)
@@ -38,7 +39,7 @@ void game::game_character::jump_tick()
 	if(!jump_velocity)
 	{
 		for(int i = 0; i < 3; i++)
-			if(check_game_collision(pos_x() + i, pos_y() + 1))
+			if(check_character_collision(pos_x() + i, pos_y() + 1))
 				return;
 		switch(get_direction())
 		{
@@ -56,7 +57,7 @@ void game::game_character::jump_tick()
 
 	for(int i = 0; i < 3; i++)
 	{
-		if(check_game_collision(pos_x() + i, pos_y() - 3))
+		if(check_character_collision(pos_x() + i, pos_y() - 3))
 		{
 			log("found collision at next y(%d), jump aborted", pos_y() - 1);
 			jump_velocity = 0;
@@ -95,6 +96,22 @@ void game::game_character::initialize_position()
 	jump_velocity = 0;
 
 	log("character position initialized, x:%d y:%d", char_x, char_y);
+}
+
+bool game::game_character::check_character_collision(int x, int y)
+{
+	game_component* collision_component = check_game_collision(x, y);
+
+	if(!collision_component)
+		return false;
+
+	if(collision_component->get_type() == game_component::component_type::powerup)
+	{
+		game_powerup* powerup = reinterpret_cast<game_powerup*>(collision_component);
+		log("detected powerup pickup, type: %d", powerup->get_type());
+	}
+
+	return true;
 }
 
 void game::game_character::render()
@@ -247,7 +264,7 @@ void game::game_character::on_jump()
 
 	bool can_jump = false;
 	for(int i = 0; i < 3; i++)
-		if(check_game_collision(pos_x() + i, pos_y() + 1))
+		if(check_character_collision(pos_x() + i, pos_y() + 1))
 			can_jump = true;
 
 	if(!can_jump)
@@ -276,7 +293,7 @@ void game::game_character::on_right_arrow()
 
 	for(int i = 0; i < 4; i++)
 		for(int j = 0; j < 3; j++)
-			if(check_game_collision(pos_x() + i, pos_y() - j))
+			if(check_character_collision(pos_x() + i, pos_y() - j))
 				return;
 
 	if(pos_x() >= get_game_settings()->get_game_width() - get_game_settings()->get_map_offsetting_max())
@@ -305,7 +322,7 @@ void game::game_character::on_left_arrow()
 
 	for(int i = -1; i < 2; i++)
 		for(int j = 0; j < 3; j++)
-		if(check_game_collision(pos_x() + i, pos_y() - j))
+		if(check_character_collision(pos_x() + i, pos_y() - j))
 			return;
 
 	if(pos_x() <= get_game_settings()->get_map_offsetting_min() && get_game_map()->get_map_offset())

@@ -73,7 +73,7 @@ void game::game::render()
 void game::game::render_console()
 {
 	for(int i = 0; i < console_lines.get_size(); i++)
-		io->draw(3, settings->get_game_height() + i, console::color::yellow, false, console_lines[i]);
+		io->draw(3, settings->get_game_height() + 1 + i, console::color::yellow, false, console_lines[i]);
 }
 
 void game::game::write_log(const char* format, va_list args)

@@ -24,13 +24,15 @@ namespace game
 		void render_right_leg();
 		void render_life();
 
+	private:
 		void on_right_arrow();
 		void on_left_arrow();
-
-		void initialize_position();
-
 		void on_jump();
 		void on_shoot();
+
+	private:
+		bool check_character_collision(int x, int y);
+		void initialize_position();
 		void jump_tick();
 
 	private:

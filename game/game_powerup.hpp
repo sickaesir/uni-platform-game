@@ -18,6 +18,9 @@ namespace game
 		virtual void render() override;
 		virtual void tick() override;
 
+	public:
+		powerup_type get_type();
+
 	private:
 		powerup_type type;
 		bool descend;
