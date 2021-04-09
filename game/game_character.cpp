@@ -11,6 +11,8 @@ game::game_character::game_character(game_component* parent) : game_component(pa
 	, jump_velocity(0)
 	, life(get_game_settings()->get_max_character_life())
 	, last_shoot_tick(0)
+	, using_laser(0)
+	, extra_jump(0)
 {
 }
 
@@ -274,7 +276,7 @@ void game::game_character::on_jump()
 		return;
 	}
 
-	jump_velocity = get_game_settings()->get_character_jump_velocity();
+	jump_velocity = get_game_settings()->get_character_jump_velocity() + extra_jump;
 	log("initialized jump with %d velocity units", jump_velocity);
 }
 
@@ -344,7 +346,7 @@ void game::game_character::on_shoot()
 	last_shoot_tick = get_game_instance()->get_tick_count();
 
 	log("created laser");
-	game_laser* laser = new game_laser(this, 4);
+	game_laser* laser = new game_laser(this, using_laser);
 	laser->pos_y(pos_y() - 1);
 	laser->set_direction(get_direction());
 
@@ -364,4 +366,20 @@ void game::game_character::add_life(int amount)
 
 	if(life < 0)
 		life = 0;
+}
+
+void game::game_character::upgrade_laser()
+{
+	if(using_laser == sprites::lasers_count - 1)
+		return;
+
+	using_laser++;
+}
+
+void game::game_character::upgrade_jump()
+{
+	if(extra_jump == get_game_settings()->get_powerup_max_total_jump())
+		return;
+
+	extra_jump++;
 }

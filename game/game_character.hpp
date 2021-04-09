@@ -17,6 +17,8 @@ namespace game
 
 	public:
 		void add_life(int amount);
+		void upgrade_laser();
+		void upgrade_jump();
 
 	private:
 		void render_head();
@@ -42,5 +44,7 @@ namespace game
 		int jump_velocity;
 		int life;
 		int last_shoot_tick;
+		int using_laser;
+		int extra_jump;
 	};
 }

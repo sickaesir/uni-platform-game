@@ -31,6 +31,12 @@ void game::game_powerup::render()
 		case powerup_type::heal:
 			powerup_symbol = '+';
 		break;
+		case powerup_type::laser:
+			powerup_symbol = '>';
+		break;
+		case powerup_type::jump:
+			powerup_symbol = '^';
+		break;
 	}
 
 	int render_x = pos_x() - get_game_map()->get_map_offset();
@@ -84,6 +90,12 @@ void game::game_powerup::pick()
 	{
 		case powerup_type::heal:
 			character->add_life(get_game_settings()->get_powerup_heal_amount());
+		break;
+		case powerup_type::laser:
+			character->upgrade_laser();
+		break;
+		case powerup_type::jump:
+			character->upgrade_jump();
 		break;
 	}
 

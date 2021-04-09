@@ -27,6 +27,7 @@ namespace settings
 	constexpr const int character_reattack_ticks = 300; // ticks between every character shot
 	constexpr const int powerup_heal_amount = 10; // amount of life points healed by heal powerup
 	constexpr const int powerup_max_gen_amount = 1; // maximum amount of powerup to generate at each map extension
+	constexpr const int powerup_max_total_jump = 5; // max jump tick points added by powerups
 };
 
 // console settings

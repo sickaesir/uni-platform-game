@@ -9,6 +9,8 @@ namespace game
 		enum class powerup_type
 		{
 			heal = 0,
+			laser,
+			jump,
 			_last
 		};
 	public:
