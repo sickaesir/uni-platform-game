@@ -13,7 +13,7 @@ game::game::game(int argc, char** argv) : game_component(nullptr, game_component
 	tick_count(0)
 {
 	settings = new game_settings(argc, argv); // ! must be first !
-	map = new game_map(this, settings->get_game_height(), settings->get_game_width(), settings->get_map_wall_padding());
+	map = new game_map(this);
 	io = new game_io(this);
 	character = new game_character(this);
 	add_component(map);

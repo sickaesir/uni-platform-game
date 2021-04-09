@@ -6,13 +6,8 @@ namespace game
 	class game_map : public game_component
 	{
 	public:
-		game_map(game_component* parent, int _game_height, int _game_width, int _wall_padding);
+		game_map(game_component* parent);
 		~game_map();
-
-	// public getters
-	public:
-		int height();
-		int width();
 
 	// public methods
 	public:
@@ -30,12 +25,6 @@ namespace game
 		void generate_rocks();
 		void generate_powerups();
 	private:
-		char** map_text;
-		int map_height;
-		int map_width;
-		int game_height;
-		int game_width;
-		int wall_padding;
 		int map_offset;
 		int rocks_to_generate;
 		int powerups_to_generate;

@@ -70,13 +70,17 @@ int game::game_rock::get_rock_width()
 
 game::game_component* game::game_rock::check_collision(game_component* requester, int x, int y)
 {
+	{
+		int x_start = pos_x() - get_game_map()->get_map_offset();
+		int x_end = x_start + rock_width;
+		if(x_end < 0)
+			return nullptr;
+	}
+
 	for(int ry = 0; ry < rock_height; ry++)
 	{
 		for(int rx = 0; rx < rock_width; rx++)
 		{
-//			if(rock_text[ry][rx] == ' ')
-//				continue;
-
 			int render_x = pos_x() + rx - get_game_map()->get_map_offset();
 			if(render_x < 0 /*|| render_x > get_game_settings()->get_game_width()*/)
 				continue;
