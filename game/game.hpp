@@ -15,6 +15,7 @@ namespace game
 		class game_map* get_map();
 		class game_settings* get_settings();
 		class game_io* get_io();
+		class game_character* get_character();
 
 	// public methods
 	public:

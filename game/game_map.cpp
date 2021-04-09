@@ -34,7 +34,7 @@ void game::game_map::generate_powerups()
 
 	unsigned int x_offset = get_game_settings()->get_game_width() + map_offset;
 	game_powerup::powerup_type type = static_cast<game_powerup::powerup_type>(get_game_instance()->urandom_number(0, static_cast<unsigned int>(game_powerup::powerup_type::_last) - 1));
-	int x = get_game_instance()->urandom_number(map_offset + get_game_settings()->get_map_wall_padding(), map_offset + get_game_settings()->get_game_width() - 5);
+	int x = get_game_instance()->urandom_number(x_offset + get_game_settings()->get_map_wall_padding(), x_offset + get_game_settings()->get_game_width() - 5);
 	int y = get_game_settings()->get_map_wall_padding() + 5;
 
 	game_powerup* powerup = new game_powerup(this, type);

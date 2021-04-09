@@ -56,6 +56,14 @@ game::game_io* game::game_component::get_game_io()
 	return game_instance->get_io();
 }
 
+game::game_character* game::game_component::get_game_character()
+{
+	game* game_instance = get_game_instance();
+	if(!game_instance) return nullptr;
+
+	return game_instance->get_character();
+}
+
 game::game_component::component_type game::game_component::get_type()
 {
 	return type;

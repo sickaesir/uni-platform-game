@@ -40,6 +40,11 @@ game::game_map* game::game::get_map()
 	return map;
 }
 
+game::game_character* game::game::get_character()
+{
+	return character;
+}
+
 bool game::game::on_keyboard(int keyboard_key)
 {
 	return game::game_component::on_keyboard(keyboard_key);

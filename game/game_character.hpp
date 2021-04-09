@@ -15,6 +15,9 @@ namespace game
 		virtual void render() override;
 		virtual bool on_keyboard(int character) override;
 
+	public:
+		void add_life(int amount);
+
 	private:
 		void render_head();
 		void render_body();

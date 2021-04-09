@@ -2,6 +2,7 @@
 #include "game_io.hpp"
 #include "game_map.hpp"
 #include "game_settings.hpp"
+#include "game_character.hpp"
 
 game::game_powerup::game_powerup(game_component* parent, powerup_type _type) :
 	game_component(parent, game_component::component_type::powerup),
@@ -59,4 +60,32 @@ void game::game_powerup::render()
 game::game_powerup::powerup_type game::game_powerup::get_type()
 {
 	return type;
+}
+
+game::game_component* game::game_powerup::check_collision(game_component* requester, int x, int y)
+{
+	int render_x = pos_x() - get_game_map()->get_map_offset();
+	if(render_x < 0 || render_x > get_game_settings()->get_game_width())
+		return nullptr;
+
+	if(y > pos_y()
+		&& y < pos_y() + 2
+		&& x > render_x
+		&& x < render_x + 2)
+		return this;
+
+	return nullptr;
+}
+
+void game::game_powerup::pick()
+{
+	game_character* character = get_game_character();
+	switch(get_type())
+	{
+		case powerup_type::heal:
+			character->add_life(get_game_settings()->get_powerup_heal_amount());
+		break;
+	}
+
+	invalidate();
 }

@@ -15,7 +15,7 @@ namespace settings
 	constexpr const int map_wall_padding = 3; // map wall sizes
 	constexpr const bool console_mode = false; // console rendering
 	constexpr const int console_lines = 5; // console line count
-	constexpr const int io_inactive_ticks = 100; // number of ticks before signaling inactivity
+	constexpr const int io_inactive_ticks = 200; // number of ticks before signaling inactivity
 	constexpr const int character_jump_velocity = 10; // the unit size of a single jump
 	constexpr const int gravity_ticks = 70; // ticks count before processing a gravity-related tick
 	constexpr const int map_offsetting_min = 30; // character position after which the map offset starts to decrease

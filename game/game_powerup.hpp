@@ -17,9 +17,11 @@ namespace game
 	public:
 		virtual void render() override;
 		virtual void tick() override;
+		virtual game_component* check_collision(game_component* requester, int x, int y) override;
 
 	public:
 		powerup_type get_type();
+		void pick();
 
 	private:
 		powerup_type type;

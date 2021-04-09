@@ -109,6 +109,7 @@ bool game::game_character::check_character_collision(int x, int y)
 	{
 		game_powerup* powerup = reinterpret_cast<game_powerup*>(collision_component);
 		log("detected powerup pickup, type: %d", powerup->get_type());
+		powerup->pick();
 	}
 
 	return true;
@@ -352,4 +353,15 @@ void game::game_character::on_shoot()
 	else
 		laser->pos_x(pos_x() + 2);
 	add_component(laser);
+}
+
+void game::game_character::add_life(int amount)
+{
+	life += amount;
+
+	if(life > get_game_settings()->get_max_character_life())
+		life = get_game_settings()->get_max_character_life();
+
+	if(life < 0)
+		life = 0;
 }

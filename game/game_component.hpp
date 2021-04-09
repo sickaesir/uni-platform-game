@@ -45,6 +45,7 @@ namespace game
 		class game* get_game_instance();
 		class game_settings* get_game_settings();
 		class game_io* get_game_io();
+		class game_character* get_game_character();
 		game_component* check_game_collision(int x, int y);
 		int get_children_count();
 		game_component* get_child(int index);
