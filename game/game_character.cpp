@@ -165,13 +165,14 @@ void game::game_character::render_body()
 void game::game_character::render_left_arm()
 {
 	char left_arm_char = '<';
+	int map_offset = get_game_map()->get_map_offset();
 	switch(get_direction())
 	{
 		case game_component::direction_type::right:
-			left_arm_char = pos_x() % 4 ? '/' : '<';
+			left_arm_char = (pos_x() + map_offset) % 4 ? '/' : '<';
 		break;
 		case game_component::direction_type::left:
-			left_arm_char = pos_x() % 4 ? '\'' : '-';
+			left_arm_char = (pos_x() + map_offset) % 4 ? '\'' : '-';
 	}
 
 	get_game_io()->draw(pos_x(), pos_y() - 1, console::color::blue, true, left_arm_char);
@@ -180,14 +181,14 @@ void game::game_character::render_left_arm()
 void game::game_character::render_right_arm()
 {
 	char right_arm_char = '>';
-
+	int map_offset = get_game_map()->get_map_offset();
 	switch(get_direction())
 	{
 		case game_component::direction_type::right:
-			right_arm_char = pos_x() % 4 ? '\'' : '-';
+			right_arm_char = (pos_x() + map_offset) % 4 ? '\'' : '-';
 		break;
 		case game_component::direction_type::left:
-			right_arm_char = pos_x() % 4 ? '\\' : '>';
+			right_arm_char = (pos_x() + map_offset) % 4 ? '\\' : '>';
 		break;
 	}
 
@@ -197,10 +198,11 @@ void game::game_character::render_right_arm()
 void game::game_character::render_left_leg()
 {
 	char left_leg_char = '/';
+	int map_offset = get_game_map()->get_map_offset();
 	switch(get_direction())
 	{
 		case game_component::direction_type::left:
-			left_leg_char = pos_x() % 3 ? '<' : '/';
+			left_leg_char = (pos_x() + map_offset) % 3 ? '<' : '/';
 		break;
 	}
 	get_game_io()->draw(pos_x(), pos_y(), console::color::blue, true, left_leg_char);
@@ -209,10 +211,11 @@ void game::game_character::render_left_leg()
 void game::game_character::render_right_leg()
 {
 	char right_leg_char = '\\';
+	int map_offset = get_game_map()->get_map_offset();
 	switch(get_direction())
 	{
 		case game_component::direction_type::right:
-			right_leg_char = pos_x() % 3 ? '>' : '\\';
+			right_leg_char = (pos_x() + map_offset) % 3 ? '>' : '\\';
 		break;
 	}
 	get_game_io()->draw(pos_x() + 2, pos_y(), console::color::blue, true, right_leg_char);
