@@ -28,6 +28,7 @@ namespace game
 		int get_powerup_max_gen_amount();
 		int get_powerup_max_total_jump();
 		int get_enemy_gen_count();
+		int get_enemy_character_distance();
 
 	private:
 		void initialize_settings();
@@ -55,6 +56,7 @@ namespace game
 		int powerup_max_gen_amount;
 		int powerup_max_total_jump;
 		int enemy_gen_count;
+		int enemy_character_distance;
 		char* game_path;
 	};
 }

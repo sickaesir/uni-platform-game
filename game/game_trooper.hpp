@@ -14,5 +14,8 @@ namespace game
 	public:
 		virtual unsigned int get_enemy_height() override;
 		virtual unsigned int get_enemy_width() override;
+
+	private:
+		void descend_tick();
 	};
 };

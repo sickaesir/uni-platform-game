@@ -29,6 +29,7 @@ void game::game_settings::initialize_settings()
 	powerup_max_gen_amount = settings::powerup_max_gen_amount;
 	powerup_max_total_jump = settings::powerup_max_total_jump;
 	enemy_gen_count = settings::enemy_gen_count;
+	enemy_character_distance = settings::enemy_character_distance;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -157,6 +158,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		enemy_gen_count = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("enemy-character-distance"))
+	{
+		enemy_character_distance = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -256,4 +261,9 @@ int game::game_settings::get_powerup_max_total_jump()
 int game::game_settings::get_enemy_gen_count()
 {
 	return enemy_gen_count;
+}
+
+int game::game_settings::get_enemy_character_distance()
+{
+	return enemy_character_distance;
 }

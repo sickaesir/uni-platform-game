@@ -11,7 +11,17 @@ game::game_trooper::game_trooper(game_component* parent) : game_enemy(parent, ga
 
 void game::game_trooper::tick()
 {
+	descend_tick();
 	game_enemy::tick();
+}
+
+void game::game_trooper::descend_tick()
+{
+	for(int i = 0; i < get_enemy_width(); i++)
+		if(check_game_collision(pos_x() - get_game_map()->get_map_offset() + i, pos_y() + 1))
+			return;
+
+	pos_y(pos_y() + 1);
 }
 
 void game::game_trooper::render()
