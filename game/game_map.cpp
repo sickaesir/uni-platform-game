@@ -7,12 +7,15 @@
 #include "game_settings.hpp"
 #include "game_rock.hpp"
 #include "game_powerup.hpp"
+#include "game_enemy.hpp"
+#include "game_character.hpp"
 
 game::game_map::game_map(game_component* parent) :
 	game_component(parent, game_component::component_type::map),
 	map_offset(0),
 	rocks_to_generate(0),
-	powerups_to_generate(0)
+	powerups_to_generate(0),
+	enemies_to_generate(0)
 {
 }
 
@@ -24,6 +27,7 @@ void game::game_map::extend_map()
 {
 	rocks_to_generate += get_game_settings()->get_rocks_gen_count();
 	powerups_to_generate += get_game_settings()->get_powerup_max_gen_amount();
+	enemies_to_generate += get_game_settings()->get_enemy_gen_count() + get_game_character()->get_extra_jump() + get_game_character()->get_using_laser();
 }
 
 
@@ -41,9 +45,9 @@ void game::game_map::generate_powerups()
 	powerup->pos_x(x);
 	powerup->pos_y(y);
 
-	for(int rx = -3; rx < 3; rx++)
+	for(int rx = -5; rx < 5; rx++)
 	{
-		for(int ry = -3; ry < 3; ry++)
+		for(int ry = -5; ry < 5; ry++)
 		{
 			if(get_game_instance()->check_collision(powerup, x + rx, y + ry))
 			{
@@ -55,6 +59,41 @@ void game::game_map::generate_powerups()
 
 	add_component(powerup);
 	powerups_to_generate--;
+}
+
+void game::game_map::generate_enemies()
+{
+	if(!enemies_to_generate)
+		return;
+
+	unsigned int x_offset = get_game_settings()->get_game_width() + map_offset;
+	game_component::component_type enemy_type =
+			(game_component::component_type)get_game_instance()->urandom_number((unsigned int)game_component::enemy_start,
+											(unsigned int)game_component::enemy_end);
+	game_enemy* enemy = game_enemy::generate_enemy(enemy_type, this);
+
+	int x = get_game_instance()->urandom_number(x_offset + get_game_settings()->get_map_wall_padding(),
+							x_offset + get_game_settings()->get_game_width() - enemy->get_enemy_width());
+	int y = get_game_instance()->urandom_number(get_game_settings()->get_map_wall_padding(),
+		get_game_settings()->get_game_height() - get_game_settings()->get_map_wall_padding() - enemy->get_enemy_height());
+
+	enemy->pos_x(x);
+	enemy->pos_y(y);
+
+	for(int rx = -enemy->get_enemy_width(); rx < enemy->get_enemy_width(); rx++)
+	{
+		for(int ry = -enemy->get_enemy_height(); ry < enemy->get_enemy_height(); ry++)
+		{
+			if(check_collision(enemy, x + rx - map_offset, y + ry))
+			{
+				delete enemy;
+				return;
+			}
+		}
+	}
+
+	add_component(enemy);
+	enemies_to_generate--;
 }
 
 void game::game_map::generate_rocks()
@@ -127,6 +166,7 @@ void game::game_map::tick()
 {
 	generate_rocks();
 	generate_powerups();
+	generate_enemies();
 	game_component::tick();
 }
 

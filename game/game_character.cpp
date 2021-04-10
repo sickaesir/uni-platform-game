@@ -386,3 +386,13 @@ void game::game_character::upgrade_jump()
 
 	extra_jump++;
 }
+
+int game::game_character::get_using_laser()
+{
+	return using_laser;
+}
+
+int game::game_character::get_extra_jump()
+{
+	return extra_jump;
+}

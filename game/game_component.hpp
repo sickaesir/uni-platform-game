@@ -15,7 +15,7 @@ namespace game
 			left
 		};
 
-		enum class component_type
+		enum class component_type : unsigned int
 		{
 			game,
 			character,
@@ -23,8 +23,12 @@ namespace game
 			laser,
 			map,
 			rock,
-			powerup
+			powerup,
+			trooper
 		};
+
+		static constexpr const component_type enemy_start = component_type::trooper;
+		static constexpr const component_type enemy_end = component_type::trooper;
 
 
 	public:

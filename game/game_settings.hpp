@@ -27,6 +27,7 @@ namespace game
 		int get_powerup_heal_amount();
 		int get_powerup_max_gen_amount();
 		int get_powerup_max_total_jump();
+		int get_enemy_gen_count();
 
 	private:
 		void initialize_settings();
@@ -53,6 +54,7 @@ namespace game
 		int powerup_heal_amount;
 		int powerup_max_gen_amount;
 		int powerup_max_total_jump;
+		int enemy_gen_count;
 		char* game_path;
 	};
 }

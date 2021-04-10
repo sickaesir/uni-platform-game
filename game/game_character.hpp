@@ -19,6 +19,8 @@ namespace game
 		void add_life(int amount);
 		void upgrade_laser();
 		void upgrade_jump();
+		int get_using_laser();
+		int get_extra_jump();
 
 	private:
 		void render_head();

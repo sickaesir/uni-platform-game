@@ -28,6 +28,7 @@ void game::game_settings::initialize_settings()
 	powerup_heal_amount = settings::powerup_heal_amount;
 	powerup_max_gen_amount = settings::powerup_max_gen_amount;
 	powerup_max_total_jump = settings::powerup_max_total_jump;
+	enemy_gen_count = settings::enemy_gen_count;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -152,6 +153,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		powerup_max_total_jump = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("enemy-gen-count"))
+	{
+		enemy_gen_count = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -246,4 +251,9 @@ int game::game_settings::get_powerup_max_gen_amount()
 int game::game_settings::get_powerup_max_total_jump()
 {
 	return powerup_max_total_jump;
+}
+
+int game::game_settings::get_enemy_gen_count()
+{
+	return enemy_gen_count;
 }

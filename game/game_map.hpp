@@ -24,9 +24,11 @@ namespace game
 		void extend_map();
 		void generate_rocks();
 		void generate_powerups();
+		void generate_enemies();
 	private:
 		int map_offset;
 		int rocks_to_generate;
 		int powerups_to_generate;
+		int enemies_to_generate;
 	};
 }
