@@ -12,6 +12,7 @@ game::game_trooper::game_trooper(game_component* parent) : game_enemy(parent, ga
 void game::game_trooper::tick()
 {
 	descend_tick();
+	move_tick();
 	game_enemy::tick();
 }
 
@@ -24,41 +25,55 @@ void game::game_trooper::descend_tick()
 	pos_y(pos_y() + 1);
 }
 
+void game::game_trooper::move_tick()
+{
+	if(get_tick_count() % 150) return;
+
+	log("rel char x:%d y:%d", get_relative_character_x(), get_relative_character_y());
+
+	pos_x(pos_x() + get_relative_character_x());
+}
+
 void game::game_trooper::render()
 {
 	int render_x = pos_x() - get_game_map()->get_map_offset();
 
-	if(render_x < 0 || render_x > get_game_settings()->get_game_width())
-		return;
 
-	get_game_io()->draw(render_x, pos_y() - 2, console::color::cyan, true, '(');
-	get_game_io()->draw(render_x + 1, pos_y() - 2, console::color::cyan, true, ')');
-	get_game_io()->draw(render_x + 2, pos_y() - 2, console::color::green, true, '=');
-	get_game_io()->draw(render_x + 3, pos_y() - 2, console::color::green, true, '=');
-	get_game_io()->draw(render_x + 4, pos_y() - 2, console::color::cyan, true, '(');
-	get_game_io()->draw(render_x + 5, pos_y() - 2, console::color::cyan, true, ')');
-	get_game_io()->draw(render_x + 2, pos_y() - 1, console::color::red, true, '<');
-	get_game_io()->draw(render_x + 3, pos_y() - 1, console::color::white, true, ']');
-	get_game_io()->draw(render_x + 4, pos_y() - 1, console::color::red, true, '\\');
-	get_game_io()->draw(render_x + 1, pos_y(), console::color::magenta, true, '*');
-	get_game_io()->draw(render_x + 2, pos_y(), console::color::cyan, true, '~');
-	get_game_io()->draw(render_x + 3, pos_y(), console::color::cyan, true, '\\');
-	get_game_io()->draw(render_x + 4, pos_y(), console::color::cyan, true, '[');
+	auto draw_wrapper = [this](int x, int y, console::color color, char character) -> void {
+		if(x < 0 || x > get_game_settings()->get_game_width())
+			return;
+
+		get_game_io()->draw(x, y, color, true, character);
+	};
+
+	draw_wrapper(render_x, pos_y() - 2, console::color::cyan, '(');
+	draw_wrapper(render_x + 1, pos_y() - 2, console::color::cyan, ')');
+	draw_wrapper(render_x + 2, pos_y() - 2, console::color::green, '=');
+	draw_wrapper(render_x + 3, pos_y() - 2, console::color::green, '=');
+	draw_wrapper(render_x + 4, pos_y() - 2, console::color::cyan, '(');
+	draw_wrapper(render_x + 5, pos_y() - 2, console::color::cyan, ')');
+	draw_wrapper(render_x + 2, pos_y() - 1, console::color::red, '<');
+	draw_wrapper(render_x + 3, pos_y() - 1, console::color::white, ']');
+	draw_wrapper(render_x + 4, pos_y() - 1, console::color::red, '\\');
+	draw_wrapper(render_x + 1, pos_y(), console::color::magenta, '*');
+	draw_wrapper(render_x + 2, pos_y(), console::color::cyan, '~');
+	draw_wrapper(render_x + 3, pos_y(), console::color::cyan, '\\');
+	draw_wrapper(render_x + 4, pos_y(), console::color::cyan, '[');
 
 	int offset_x = 0;
 
 	if(pos_x() % 2)
 	{
 		++offset_x;
-		get_game_io()->draw(render_x + 4 + offset_x, pos_y(), console::color::magenta, true, '=');
+		draw_wrapper(render_x + 4 + offset_x, pos_y(), console::color::magenta, '=');
 		++offset_x;
-		get_game_io()->draw(render_x + 4 + offset_x, pos_y(), console::color::magenta, true, '-');
+		draw_wrapper(render_x + 4 + offset_x, pos_y(), console::color::magenta, '-');
 	}
 
 	++offset_x;
-	get_game_io()->draw(render_x + 4 + offset_x, pos_y(), console::color::cyan, true, '[');
+	draw_wrapper(render_x + 4 + offset_x, pos_y(), console::color::cyan, '[');
 	++offset_x;
-	get_game_io()->draw(render_x + 4 + offset_x, pos_y(), console::color::cyan, true, '[');
+	draw_wrapper(render_x + 4 + offset_x, pos_y(), console::color::cyan, '[');
 
 	game_enemy::render();
 }

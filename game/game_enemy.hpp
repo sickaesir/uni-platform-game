@@ -17,6 +17,8 @@ namespace game
 	public:
 		virtual unsigned int get_enemy_height() = 0;
 		virtual unsigned int get_enemy_width() = 0;
+		int get_relative_character_y();
+		int get_relative_character_x();
 
 	private:
 		int relative_character_y;
