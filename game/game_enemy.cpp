@@ -13,7 +13,7 @@ game::game_enemy::game_enemy(game_component* parent, game_component::component_t
 void game::game_enemy::tick()
 {
 	int character_x = get_game_character()->pos_x() + get_game_map()->get_map_offset();
-	int character_y = get_game_character()->pos_y() - get_game_map()->get_map_offset();
+	int character_y = get_game_character()->pos_y() + get_game_map()->get_map_offset();
 	int x = pos_x();
 
 	log("cx:%d x:%d", character_x, x);
@@ -52,4 +52,15 @@ int game::game_enemy::get_relative_character_y()
 int game::game_enemy::get_relative_character_x()
 {
 	return relative_character_x;
+}
+
+game::game_component* game::game_enemy::check_collision(game_component* requester, int x, int y)
+{
+	if(x > pos_x() &&
+		x < pos_x() + get_enemy_width() &&
+		y > pos_y() &&
+		y < pos_y() + get_enemy_height())
+		return this;
+
+	return game_component::check_collision(requester, x, y);
 }

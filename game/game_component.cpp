@@ -80,6 +80,7 @@ const char* game::game_component::get_type_str()
 		case component_type::map: return "map";
 		case component_type::rock: return "rock";
 		case component_type::powerup: return "powerup";
+		case component_type::trooper: return "trooper";
 		default: return "n/a";
 	}
 }

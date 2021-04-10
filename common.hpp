@@ -30,6 +30,7 @@ namespace settings
 	constexpr const int powerup_max_total_jump = 5; // max jump tick points added by powerups
 	constexpr const int enemy_gen_count = 3; // base count of enemies to generate at each map expansion
 	constexpr const int enemy_character_distance = 10; // distance the enemies should keep from the game character
+	constexpr const int enemy_movement_tick_interval = 150; // interval between an enemy move tick
 };
 
 // console settings

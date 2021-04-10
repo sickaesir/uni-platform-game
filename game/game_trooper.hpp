@@ -16,6 +16,8 @@ namespace game
 		virtual unsigned int get_enemy_width() override;
 
 	private:
+		void render_right();
+		void render_left();
 		void move_tick();
 		void descend_tick();
 	};

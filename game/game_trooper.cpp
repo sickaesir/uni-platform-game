@@ -18,6 +18,7 @@ void game::game_trooper::tick()
 
 void game::game_trooper::descend_tick()
 {
+	if(get_tick_count() % get_game_settings()->get_enemy_movement_tick_interval()) return;
 	for(int i = 0; i < get_enemy_width(); i++)
 		if(check_game_collision(pos_x() - get_game_map()->get_map_offset() + i, pos_y() + 1))
 			return;
@@ -27,14 +28,84 @@ void game::game_trooper::descend_tick()
 
 void game::game_trooper::move_tick()
 {
-	if(get_tick_count() % 150) return;
+	if(get_tick_count() % get_game_settings()->get_enemy_movement_tick_interval()) return;
 
 	log("rel char x:%d y:%d", get_relative_character_x(), get_relative_character_y());
 
-	pos_x(pos_x() + get_relative_character_x());
+	int next_x = pos_x() + get_relative_character_x();
+
+	switch(get_relative_character_x())
+	{
+		case -1:
+			set_direction(game_component::direction_type::left);
+			if(check_game_collision(next_x - get_game_map()->get_map_offset(), pos_y()))
+				return;
+		break;
+		case 1:
+			set_direction(game_component::direction_type::right);
+			if(check_game_collision(next_x + get_enemy_width() - get_game_map()->get_map_offset(), pos_y()))
+				return;
+		break;
+	}
+
+	pos_x(next_x);
 }
 
 void game::game_trooper::render()
+{
+	switch(get_direction())
+	{
+		case game_component::direction_type::left:
+			render_left();
+		break;
+		case game_component::direction_type::right:
+			render_right();
+		break;
+	}
+}
+
+void game::game_trooper::render_right()
+{
+	int render_x = pos_x() - get_game_map()->get_map_offset();
+	auto draw_wrapper = [this](int x, int y, console::color color, char character) -> void {
+		if(x < 0 || x > get_game_settings()->get_game_width())
+			return;
+
+		get_game_io()->draw(x, y, color, true, character);
+	};
+
+	int offset_x = 0;
+
+	draw_wrapper(render_x + 3, pos_y() - 2, console::color::cyan, '(');
+	draw_wrapper(render_x + 4, pos_y() - 2, console::color::cyan, ')');
+	draw_wrapper(render_x + 5, pos_y() - 2, console::color::green, '=');
+	draw_wrapper(render_x + 6, pos_y() - 2, console::color::green, '=');
+	draw_wrapper(render_x + 7, pos_y() - 2, console::color::cyan, '(');
+	draw_wrapper(render_x + 8, pos_y() - 2, console::color::cyan, ')');
+	draw_wrapper(render_x + 4, pos_y() - 1, console::color::red, '/');
+	draw_wrapper(render_x + 5, pos_y() - 1, console::color::white, '[');
+	draw_wrapper(render_x + 6, pos_y() - 1, console::color::red, '>');
+
+	if(pos_x() % 2)
+	{
+		draw_wrapper(render_x, pos_y(), console::color::cyan, ']');
+		draw_wrapper(render_x + 1, pos_y(), console::color::cyan, ']');
+		draw_wrapper(render_x + 2, pos_y(), console::color::magenta, '-');
+		draw_wrapper(render_x + 3, pos_y(), console::color::magenta, '=');
+	}
+	else
+	{
+		draw_wrapper(render_x + 2, pos_y(), console::color::cyan, ']');
+		draw_wrapper(render_x + 3, pos_y(), console::color::cyan, ']');
+	}
+	draw_wrapper(render_x + 4, pos_y(), console::color::cyan, ']');
+	draw_wrapper(render_x + 5, pos_y(), console::color::cyan, '/');
+	draw_wrapper(render_x + 6, pos_y(), console::color::cyan, '~');
+	draw_wrapper(render_x + 7, pos_y(), console::color::magenta, '*');
+
+}
+
+void game::game_trooper::render_left()
 {
 	int render_x = pos_x() - get_game_map()->get_map_offset();
 

@@ -30,6 +30,7 @@ void game::game_settings::initialize_settings()
 	powerup_max_total_jump = settings::powerup_max_total_jump;
 	enemy_gen_count = settings::enemy_gen_count;
 	enemy_character_distance = settings::enemy_character_distance;
+	enemy_movement_tick_interval = settings::enemy_movement_tick_interval;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -162,6 +163,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		enemy_character_distance = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("enemy-movement-tick-interval"))
+	{
+		enemy_movement_tick_interval = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -266,4 +271,9 @@ int game::game_settings::get_enemy_gen_count()
 int game::game_settings::get_enemy_character_distance()
 {
 	return enemy_character_distance;
+}
+
+int game::game_settings::get_enemy_movement_tick_interval()
+{
+	return enemy_movement_tick_interval;
 }

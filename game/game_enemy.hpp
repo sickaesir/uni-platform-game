@@ -13,6 +13,7 @@ namespace game
 
 	public:
 		virtual void tick() override;
+		virtual game_component* check_collision(game_component* requester, int x, int y) override;
 
 	public:
 		virtual unsigned int get_enemy_height() = 0;
