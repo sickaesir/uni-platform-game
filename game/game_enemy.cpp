@@ -4,9 +4,11 @@
 #include "game_trooper.hpp"
 #include "game_map.hpp"
 #include "game_settings.hpp"
+#include "game_laser.hpp"
 
 game::game_enemy::game_enemy(game_component* parent, game_component::component_type type) :
-	game_component(parent, type)
+	game_component(parent, type),
+	last_shoot_tick(0)
 {
 
 }
@@ -35,6 +37,26 @@ void game::game_enemy::tick()
 	else
 		relative_character_y = 0;
 
+	game_component::tick();
+}
+
+bool game::game_enemy::can_shoot()
+{
+	return get_tick_count() - last_shoot_tick >= get_game_settings()->get_enemy_shoot_tick_interval() && relative_character_y == 0;
+}
+
+void game::game_enemy::shoot(game_laser* laser)
+{
+	if(!can_shoot())
+	{
+		delete laser;
+		return;
+	}
+
+	laser->set_direction(get_direction());
+	add_component(laser);
+
+	last_shoot_tick = get_tick_count();
 }
 
 game::game_enemy* game::game_enemy::generate_enemy(game_component::component_type enemy_type, game_component* parent)

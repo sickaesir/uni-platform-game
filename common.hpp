@@ -19,7 +19,7 @@ namespace settings
 	constexpr const int character_jump_velocity = 10; // the unit size of a single jump
 	constexpr const int gravity_ticks = 70; // ticks count before processing a gravity-related tick
 	constexpr const int map_offsetting_min = 10; // character position after which the map offset starts to decrease
-	constexpr const int map_offsetting_max = 70; // character position after which the map offset starts to increase
+	constexpr const int map_offsetting_max = 40; // character position after which the map offset starts to increase
 	constexpr const int map_offset_threshold = 100; // limit after which the game map gets extended
 	constexpr const int rocks_gen_count = 10; // amount of rocks to generate at every map chunk
 	constexpr const int rock_gen_collision_padding = 3; // distance between other components for a collision free rock
@@ -31,6 +31,7 @@ namespace settings
 	constexpr const int enemy_gen_count = 3; // base count of enemies to generate at each map expansion
 	constexpr const int enemy_character_distance = 10; // distance the enemies should keep from the game character
 	constexpr const int enemy_movement_tick_interval = 150; // interval between an enemy move tick
+	constexpr const int enemy_shoot_tick_interval = 1000; // interval between enemy shoots
 };
 
 // console settings

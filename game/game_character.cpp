@@ -354,9 +354,9 @@ void game::game_character::on_shoot()
 	laser->set_direction(get_direction());
 
 	if(get_direction() == game_component::direction_type::left)
-		laser->pos_x(pos_x() - laser->get_laser_length());
+		laser->pos_x(pos_x() + get_game_map()->get_map_offset() - laser->get_laser_length());
 	else
-		laser->pos_x(pos_x() + 2);
+		laser->pos_x(pos_x() + get_game_map()->get_map_offset() + 2);
 	add_component(laser);
 }
 

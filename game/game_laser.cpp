@@ -26,9 +26,9 @@ game::game_laser::~game_laser()
 void game::game_laser::tick()
 {
 	if((get_direction() == game_component::direction_type::right
-		&& pos_x() > get_game_settings()->get_game_width())
+		&& pos_x() - get_game_map()->get_map_offset() > get_game_settings()->get_game_width())
 		|| (get_direction() == game_component::direction_type::left
-			&& pos_x() + get_laser_length() < 0))
+			&& pos_x() - get_game_map()->get_map_offset() + get_laser_length() < 0))
 	{
 		invalidate();
 		log("laser went out of map, invalidating component");
@@ -45,10 +45,10 @@ void game::game_laser::tick()
 			log("laser life ended, invalidating component");
 		}
 	}
+	else
+		check_laser_collision();
 
-	check_laser_collision();
-
-	if(get_game_instance()->get_tick_count() % 10 == 0)
+	if(get_game_instance()->get_tick_count() % 50 == 0)
 	{
 		switch(get_direction())
 		{
@@ -76,11 +76,15 @@ void game::game_laser::check_laser_collision()
 		break;
 	}
 
-	game_component* collided_component = check_game_collision(x, pos_y());
+	game_component* collided_component = check_game_collision(x - get_game_map()->get_map_offset(), pos_y());
 	if(!collided_component)
 		return;
 
 	if(collided_component->get_type() == game_component::component_type::rock && skip_rock)
+		return;
+
+	if(collided_component == get_parent() ||
+		collided_component->get_type() == get_parent()->get_type())
 		return;
 
 	if(!collided)
@@ -88,7 +92,7 @@ void game::game_laser::check_laser_collision()
 		collision_point.x(x);
 		collision_point.y(pos_y());
 		collided = true;
-		log("laser_collided at x:%d y:%d", collision_point.x(), collision_point.y());
+		log("laser_collided at x:%d y:%d on %s", collision_point.x(), collision_point.y(), collided_component->get_type_str());
 	}
 }
 
@@ -112,7 +116,7 @@ void game::game_laser::render()
 
 	for(int i = 0; i < get_laser_length(); i++)
 	{
-		int render_x = pos_x() + i;
+		int render_x = pos_x() + i - get_game_map()->get_map_offset();
 		if(render_x > get_game_settings()->get_game_width() || render_x < 0)
 			continue;
 

@@ -21,8 +21,13 @@ namespace game
 		int get_relative_character_y();
 		int get_relative_character_x();
 
+	protected:
+		bool can_shoot();
+		void shoot(class game_laser* laser);
+
 	private:
 		int relative_character_y;
 		int relative_character_x;
+		int last_shoot_tick;
 	};
 };

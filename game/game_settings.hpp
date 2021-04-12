@@ -30,6 +30,7 @@ namespace game
 		int get_enemy_gen_count();
 		int get_enemy_character_distance();
 		int get_enemy_movement_tick_interval();
+		int get_enemy_shoot_tick_interval();
 
 	private:
 		void initialize_settings();
@@ -59,6 +60,7 @@ namespace game
 		int enemy_gen_count;
 		int enemy_character_distance;
 		int enemy_movement_tick_interval;
+		int enemy_shoot_tick_interval;
 		char* game_path;
 	};
 }

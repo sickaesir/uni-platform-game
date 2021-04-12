@@ -2,7 +2,7 @@
 #include "game_io.hpp"
 #include "game_map.hpp"
 #include "game_settings.hpp"
-
+#include "game_laser.hpp"
 
 game::game_trooper::game_trooper(game_component* parent) : game_enemy(parent, game_component::component_type::trooper)
 {
@@ -28,30 +28,42 @@ void game::game_trooper::descend_tick()
 
 void game::game_trooper::move_tick()
 {
-	if(get_tick_count() % get_game_settings()->get_enemy_movement_tick_interval()) return;
-
-
-	log("rel char x:%d y:%d", get_relative_character_x(), get_relative_character_y());
-
-	int next_x = pos_x() + get_relative_character_x();
-
-	switch(get_relative_character_x())
+	if(!(get_tick_count() % get_game_settings()->get_enemy_movement_tick_interval()))
 	{
-		case -1:
-			set_direction(game_component::direction_type::left);
-			for(int y = pos_y() - get_enemy_height(); y < pos_y(); y++)
-				if(check_game_collision(next_x - get_game_map()->get_map_offset(), y))
-					return;
-		break;
-		case 1:
-			set_direction(game_component::direction_type::right);
-			for(int y = pos_y() - get_enemy_height(); y < pos_y(); y++)
-				if(check_game_collision(next_x + get_enemy_width() - get_game_map()->get_map_offset(), y))
-					return;
-		break;
+		int next_x = pos_x() + get_relative_character_x();
+
+		switch(get_relative_character_x())
+		{
+			case -1:
+				set_direction(game_component::direction_type::left);
+				for(int y = pos_y() - get_enemy_height(); y < pos_y(); y++)
+					if(check_game_collision(next_x - get_game_map()->get_map_offset(), y))
+						return;
+			break;
+			case 1:
+				set_direction(game_component::direction_type::right);
+				for(int y = pos_y() - get_enemy_height(); y < pos_y(); y++)
+					if(check_game_collision(next_x + get_enemy_width() - get_game_map()->get_map_offset(), y))
+						return;
+			break;
+		}
+
+		pos_x(next_x);
 	}
 
-	pos_x(next_x);
+	if(can_shoot())
+	{
+		game_laser* laser = new game_laser(this, 0, console::color::cyan, false);
+
+		laser->pos_y(pos_y() - 1);
+		if(get_direction() == game_component::direction_type::left)
+			laser->pos_x(pos_x() - get_game_map()->get_map_offset() - laser->get_laser_length());
+		else
+			laser->pos_x(pos_x() - get_game_map()->get_map_offset() + 2);
+
+		log("trooper laser initiated at x:%d y%d", laser->pos_x(), laser->pos_y());
+		shoot(laser);
+	}
 }
 
 void game::game_trooper::render()

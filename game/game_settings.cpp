@@ -31,6 +31,7 @@ void game::game_settings::initialize_settings()
 	enemy_gen_count = settings::enemy_gen_count;
 	enemy_character_distance = settings::enemy_character_distance;
 	enemy_movement_tick_interval = settings::enemy_movement_tick_interval;
+	enemy_shoot_tick_interval = settings::enemy_shoot_tick_interval;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -167,6 +168,10 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		enemy_movement_tick_interval = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("enemy-shoot-tick-interval"))
+	{
+		enemy_shoot_tick_interval = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -276,4 +281,9 @@ int game::game_settings::get_enemy_character_distance()
 int game::game_settings::get_enemy_movement_tick_interval()
 {
 	return enemy_movement_tick_interval;
+}
+
+int game::game_settings::get_enemy_shoot_tick_interval()
+{
+	return enemy_shoot_tick_interval;
 }
