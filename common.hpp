@@ -32,6 +32,7 @@ namespace settings
 	constexpr const int enemy_character_distance = 30; // distance the enemies should keep from the game character
 	constexpr const int enemy_movement_tick_interval = 150; // interval between an enemy move tick
 	constexpr const int enemy_shoot_tick_interval = 1000; // interval between enemy shoots
+	constexpr const int enemy_base_life = 100; // enemy start life points
 };
 
 // console settings

@@ -13,6 +13,7 @@ namespace game
 
 	public:
 		virtual void tick() override;
+		virtual void render() override;
 		virtual game_component* check_collision(game_component* requester, int x, int y) override;
 
 	public:
@@ -20,6 +21,9 @@ namespace game
 		virtual unsigned int get_enemy_width() = 0;
 		int get_relative_character_y();
 		int get_relative_character_x();
+
+	private:
+		void render_life();
 
 	protected:
 		bool can_shoot();
@@ -29,5 +33,6 @@ namespace game
 		int relative_character_y;
 		int relative_character_x;
 		int last_shoot_tick;
+		int life;
 	};
 };
