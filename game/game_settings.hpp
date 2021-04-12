@@ -32,6 +32,8 @@ namespace game
 		int get_enemy_movement_tick_interval();
 		int get_enemy_shoot_tick_interval();
 		int get_enemy_base_life();
+		int get_enemy_base_laser_damage();
+		int get_character_base_laser_damage();
 
 	private:
 		void initialize_settings();
@@ -63,6 +65,8 @@ namespace game
 		int enemy_movement_tick_interval;
 		int enemy_shoot_tick_interval;
 		int enemy_base_life;
+		int enemy_base_laser_damage;
+		int character_base_laser_damage;
 		char* game_path;
 	};
 }

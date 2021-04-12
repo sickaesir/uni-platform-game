@@ -21,13 +21,14 @@ namespace game
 		virtual unsigned int get_enemy_width() = 0;
 		int get_relative_character_y();
 		int get_relative_character_x();
+		void add_life(int amount);
 
 	private:
 		void render_life();
 
 	protected:
 		bool can_shoot();
-		void shoot(class game_laser* laser);
+		void shoot(int x, int y);
 
 	private:
 		int relative_character_y;

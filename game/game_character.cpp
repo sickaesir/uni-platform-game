@@ -351,7 +351,11 @@ void game::game_character::on_shoot()
 	log("created laser");
 	game_laser* laser = new game_laser(this, using_laser);
 	laser->pos_y(pos_y() - 1);
-	laser->set_direction(get_direction());
+
+	game_component::direction_type dir = get_direction();
+	if(dir == game_component::direction_type::none)
+		dir = game_component::direction_type::right;
+	laser->set_direction(dir);
 
 	if(get_direction() == game_component::direction_type::left)
 		laser->pos_x(pos_x() + get_game_map()->get_map_offset() - laser->get_laser_length());
@@ -403,7 +407,7 @@ game::game_component* game::game_character::check_collision(game_component* requ
 
 	for(int rx = render_x; rx < render_x + 3; rx++)
 	{
-		for(int ry = pos_y() - 3; ry < pos_y(); ry++)
+		for(int ry = pos_y() - 2; ry < pos_y() + 1; ry++)
 		{
 			if(rx == x && ry == y)
 				return this;

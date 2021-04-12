@@ -72,11 +72,11 @@ void game::game_enemy::render_life()
 	if(base_x < 0 || base_x > get_game_settings()->get_game_width())
 		return;
 
-	get_game_io()->draw(base_x + 1, pos_y() - get_enemy_height() - 1, bar_color, true, '=');
+	get_game_io()->draw(base_x + 1, pos_y() - get_enemy_height(), bar_color, true, '=');
 	for(int i = 0; i < bars_to_render; i++)
 	{
-		get_game_io()->draw(base_x - i, pos_y() - get_enemy_height() - 1, bar_color, true, '=');
-		get_game_io()->draw(base_x + 2 + i, pos_y() - get_enemy_height() - 1, bar_color, true, '=');
+		get_game_io()->draw(base_x - i, pos_y() - get_enemy_height(), bar_color, true, '=');
+		get_game_io()->draw(base_x + 2 + i, pos_y() - get_enemy_height(), bar_color, true, '=');
 	}
 }
 
@@ -85,15 +85,18 @@ bool game::game_enemy::can_shoot()
 	return get_tick_count() - last_shoot_tick >= get_game_settings()->get_enemy_shoot_tick_interval() && relative_character_y == 0;
 }
 
-void game::game_enemy::shoot(game_laser* laser)
+void game::game_enemy::shoot(int x, int y)
 {
 	if(!can_shoot())
-	{
-		delete laser;
 		return;
-	}
 
+	game_laser* laser = new game_laser(this, get_game_character()->get_using_laser(), console::color::cyan, false);
+	laser->pos_y(y);
+	laser->pos_x(x);
 	laser->set_direction(get_direction());
+	if(get_direction() == game_component::direction_type::left)
+		laser->pos_x(laser->pos_x() - laser->get_laser_length());
+
 	add_component(laser);
 
 	last_shoot_tick = get_tick_count();
@@ -128,7 +131,7 @@ game::game_component* game::game_enemy::check_collision(game_component* requeste
 		if(rx < 0 || rx > get_game_settings()->get_game_width())
 			continue;
 
-		for(int ry = pos_y() - get_enemy_height() + 1; ry < pos_y(); ry++)
+		for(int ry = pos_y() - get_enemy_height() + 1; ry < pos_y() + 1; ry++)
 		{
 			if(ry == y && x == rx)
 				return this;
@@ -136,4 +139,16 @@ game::game_component* game::game_enemy::check_collision(game_component* requeste
 	}
 
 	return game_component::check_collision(requester, x, y);
+}
+
+void game::game_enemy::add_life(int amount)
+{
+	life += amount;
+	if(life > get_game_settings()->get_enemy_base_life())
+		life = get_game_settings()->get_enemy_base_life();
+
+	if(life <= 0)
+	{
+		invalidate();
+	}
 }

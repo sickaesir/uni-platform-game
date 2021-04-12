@@ -33,6 +33,8 @@ void game::game_settings::initialize_settings()
 	enemy_movement_tick_interval = settings::enemy_movement_tick_interval;
 	enemy_shoot_tick_interval = settings::enemy_shoot_tick_interval;
 	enemy_base_life = settings::enemy_base_life;
+	enemy_base_laser_damage = settings::enemy_base_laser_damage;
+	character_base_laser_damage = settings::character_base_laser_damage;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -177,6 +179,14 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		enemy_base_life = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("enemy-base-laser-damage"))
+	{
+		enemy_base_laser_damage = utils::runtime_utils::atoi(arg_value);
+	}
+	else if(CMP_ARG("character-base-laser-damage"))
+	{
+		character_base_laser_damage = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -296,4 +306,14 @@ int game::game_settings::get_enemy_shoot_tick_interval()
 int game::game_settings::get_enemy_base_life()
 {
 	return enemy_base_life;
+}
+
+int game::game_settings::get_enemy_base_laser_damage()
+{
+	return enemy_base_laser_damage;
+}
+
+int game::game_settings::get_character_base_laser_damage()
+{
+	return character_base_laser_damage;
 }

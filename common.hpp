@@ -33,6 +33,8 @@ namespace settings
 	constexpr const int enemy_movement_tick_interval = 150; // interval between an enemy move tick
 	constexpr const int enemy_shoot_tick_interval = 1000; // interval between enemy shoots
 	constexpr const int enemy_base_life = 100; // enemy start life points
+	constexpr const int enemy_base_laser_damage = 5; // laser damage made by enemy (with no powerups)
+	constexpr const int character_base_laser_damage = 20; // laser damage made by character (with no powerups)
 };
 
 // console settings

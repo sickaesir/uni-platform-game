@@ -87,16 +87,12 @@ void game::game_trooper::move_tick()
 
 	if(can_shoot())
 	{
-		game_laser* laser = new game_laser(this, 0, console::color::cyan, false);
+		int shoot_x = pos_x();
+		if(get_direction() != game_component::direction_type::left)
+			shoot_x += get_enemy_width();
 
-		laser->pos_y(pos_y() - 1);
-		if(get_direction() == game_component::direction_type::left)
-			laser->pos_x(pos_x() - laser->get_laser_length());
-		else
-			laser->pos_x(pos_x() + get_enemy_width());
-
-		log("trooper laser initiated at x:%d y%d", laser->pos_x(), laser->pos_y());
-		shoot(laser);
+		//log("trooper laser initiated at x:%d y%d", laser->pos_x(), laser->pos_y());
+		shoot(shoot_x, pos_y() - 1);
 	}
 
 	if(get_relative_character_y() == -1 && !jump_ticks)

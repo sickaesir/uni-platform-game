@@ -5,6 +5,8 @@
 #include "game_settings.hpp"
 #include "../utils/runtime_utils.hpp"
 #include "game.hpp"
+#include "game_character.hpp"
+#include "game_enemy.hpp"
 
 game::game_laser::game_laser(game_component* parent, int laser_type,
 		console::color laser_color /*= console::color::red*/,
@@ -43,10 +45,9 @@ void game::game_laser::tick()
 		{
 			invalidate();
 			log("laser life ended, invalidating component");
+			return;
 		}
 	}
-	else
-		check_laser_collision();
 
 	if(get_game_instance()->get_tick_count() % 50 == 0)
 	{
@@ -61,6 +62,8 @@ void game::game_laser::tick()
 			break;
 		}
 	}
+	if(!collided)
+		check_laser_collision();
 }
 
 void game::game_laser::check_laser_collision()
@@ -68,6 +71,7 @@ void game::game_laser::check_laser_collision()
 	int x = 0;
 	switch(get_direction())
 	{
+		default:
 		case game_component::direction_type::right:
 			x = pos_x() + get_laser_length();
 		break;
@@ -76,9 +80,14 @@ void game::game_laser::check_laser_collision()
 		break;
 	}
 
+	//log("x %d %d %d", x, pos_x(), get_laser_length());
+
 	game_component* collided_component = check_game_collision(x - get_game_map()->get_map_offset(), pos_y());
 	if(!collided_component)
+	{
+		//log("no component collision");
 		return;
+	}
 
 	if(collided_component->get_type() == game_component::component_type::rock && skip_rock)
 		return;
@@ -92,6 +101,17 @@ void game::game_laser::check_laser_collision()
 		collision_point.x(x);
 		collision_point.y(pos_y());
 		collided = true;
+
+		switch(collided_component->get_type())
+		{
+			case game_component::component_type::character:
+				reinterpret_cast<game_character*>(collided_component)->add_life(-get_game_settings()->get_enemy_base_laser_damage() * (type + 1));
+			break;
+			case game_component::component_type::trooper:
+				reinterpret_cast<game_enemy*>(collided_component)->add_life(-get_game_settings()->get_character_base_laser_damage() * (type + 1));
+			break;
+		}
+
 		log("laser_collided at x:%d y:%d on %s", collision_point.x(), collision_point.y(), collided_component->get_type_str());
 	}
 }
@@ -120,21 +140,18 @@ void game::game_laser::render()
 		if(render_x - get_game_map()->get_map_offset() > get_game_settings()->get_game_width()
 			|| render_x - get_game_map()->get_map_offset() < 0)
 		{
-			log("nlr 1");
 			continue;
 		}
 
 		if(get_direction() == game_component::direction_type::right
 			&& collided && render_x >= collision_point.x())
 		{
-			log("nlr 2");
 			continue;
 		}
 
 		if(get_direction() == game_component::direction_type::left
 			&& collided && render_x <= collision_point.x())
 		{
-			log("nlr 3");
 			continue;
 		}
 

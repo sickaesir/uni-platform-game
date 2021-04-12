@@ -134,7 +134,10 @@ void game::game_map::generate_rocks()
 game::game_component* game::game_map::check_collision(game_component* requester, int x, int y)
 {
 	if(x < get_game_settings()->get_map_wall_padding() - map_offset || y < get_game_settings()->get_map_wall_padding())
+	{
+		//log("sm %d %d %d %d", x, get_game_settings()->get_map_wall_padding(), map_offset, get_game_settings()->get_map_wall_padding() - map_offset);
 		return this;
+	}
 
 	if(y > get_game_settings()->get_game_height() - get_game_settings()->get_map_wall_padding())
 		return this;
