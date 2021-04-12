@@ -399,7 +399,7 @@ int game::game_character::get_extra_jump()
 
 game::game_component* game::game_character::check_collision(game_component* requester, int x, int y)
 {
-	int render_x = pos_x() /*- get_game_map()->get_map_offset()*/;
+	int render_x = pos_x();
 
 	for(int rx = render_x; rx < render_x + 3; rx++)
 	{

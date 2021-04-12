@@ -57,9 +57,9 @@ void game::game_trooper::move_tick()
 
 		laser->pos_y(pos_y() - 1);
 		if(get_direction() == game_component::direction_type::left)
-			laser->pos_x(pos_x() - get_game_map()->get_map_offset() - laser->get_laser_length());
+			laser->pos_x(pos_x() - laser->get_laser_length());
 		else
-			laser->pos_x(pos_x() - get_game_map()->get_map_offset() + 2);
+			laser->pos_x(pos_x() + get_enemy_width());
 
 		log("trooper laser initiated at x:%d y%d", laser->pos_x(), laser->pos_y());
 		shoot(laser);
@@ -77,6 +77,8 @@ void game::game_trooper::render()
 			render_right();
 		break;
 	}
+
+	game_enemy::render();
 }
 
 void game::game_trooper::render_right()
@@ -160,8 +162,6 @@ void game::game_trooper::render_left()
 	draw_wrapper(render_x + 4 + offset_x, pos_y(), console::color::cyan, '[');
 	++offset_x;
 	draw_wrapper(render_x + 4 + offset_x, pos_y(), console::color::cyan, '[');
-
-	game_enemy::render();
 }
 
 unsigned int game::game_trooper::get_enemy_height()

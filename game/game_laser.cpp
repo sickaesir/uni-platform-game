@@ -116,18 +116,28 @@ void game::game_laser::render()
 
 	for(int i = 0; i < get_laser_length(); i++)
 	{
-		int render_x = pos_x() + i - get_game_map()->get_map_offset();
-		if(render_x > get_game_settings()->get_game_width() || render_x < 0)
+		int render_x = pos_x() + i;
+		if(render_x - get_game_map()->get_map_offset() > get_game_settings()->get_game_width()
+			|| render_x - get_game_map()->get_map_offset() < 0)
+		{
+			log("nlr 1");
 			continue;
+		}
 
 		if(get_direction() == game_component::direction_type::right
 			&& collided && render_x >= collision_point.x())
+		{
+			log("nlr 2");
 			continue;
+		}
 
 		if(get_direction() == game_component::direction_type::left
 			&& collided && render_x <= collision_point.x())
-				continue;
+		{
+			log("nlr 3");
+			continue;
+		}
 
-		get_game_io()->draw(render_x, pos_y(), color, true, sprites::lasers[get_laser_index()][i]);
+		get_game_io()->draw(render_x - get_game_map()->get_map_offset(), pos_y(), color, true, sprites::lasers[get_laser_index()][i]);
 	}
 }
