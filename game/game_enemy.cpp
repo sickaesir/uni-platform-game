@@ -21,8 +21,14 @@ void game::game_enemy::tick()
 
 
 	if(x > character_x)
-		relative_character_x = -1;
+		set_direction(game_component::direction_type::left);
 	else if(x < character_x)
+		set_direction(game_component::direction_type::right);
+
+
+	if(x > character_x + get_game_settings()->get_enemy_character_distance())
+		relative_character_x = -1;
+	else if(x < character_x - get_game_settings()->get_enemy_character_distance())
 		relative_character_x = 1;
 	else
 		relative_character_x = 0;

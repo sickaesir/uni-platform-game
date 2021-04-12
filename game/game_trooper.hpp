@@ -19,6 +19,10 @@ namespace game
 		void render_right();
 		void render_left();
 		void move_tick();
+		void jump_tick();
 		void descend_tick();
+
+	private:
+		int jump_ticks;
 	};
 };

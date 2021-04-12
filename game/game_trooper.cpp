@@ -4,7 +4,8 @@
 #include "game_settings.hpp"
 #include "game_laser.hpp"
 
-game::game_trooper::game_trooper(game_component* parent) : game_enemy(parent, game_component::component_type::trooper)
+game::game_trooper::game_trooper(game_component* parent) : game_enemy(parent, game_component::component_type::trooper),
+	jump_ticks(0)
 {
 
 }
@@ -13,12 +14,33 @@ void game::game_trooper::tick()
 {
 	descend_tick();
 	move_tick();
+	jump_tick();
 	game_enemy::tick();
+}
+
+void game::game_trooper::jump_tick()
+{
+	if(get_tick_count() % get_game_settings()->get_enemy_movement_tick_interval()) return;
+
+	if(!jump_ticks) return;
+
+	for(int i = 0; i < get_enemy_width(); i++)
+	{
+		if(check_game_collision(pos_x() - get_game_map()->get_map_offset() + i, pos_y() - get_enemy_height() - 1))
+		{
+			log("found collision on top, aborting jump");
+			jump_ticks = 0;
+			return;
+		}
+	}
+
+	pos_y(pos_y() - 1);
+	jump_ticks--;
 }
 
 void game::game_trooper::descend_tick()
 {
-	if(get_tick_count() % get_game_settings()->get_enemy_movement_tick_interval()) return;
+	if(get_tick_count() % get_game_settings()->get_enemy_movement_tick_interval() || jump_ticks) return;
 	for(int i = 0; i < get_enemy_width(); i++)
 		if(check_game_collision(pos_x() - get_game_map()->get_map_offset() + i, pos_y() + 1))
 			return;
@@ -32,23 +54,35 @@ void game::game_trooper::move_tick()
 	{
 		int next_x = pos_x() + get_relative_character_x();
 
+		bool move_collision = false;
 		switch(get_relative_character_x())
 		{
 			case -1:
-				set_direction(game_component::direction_type::left);
+				//set_direction(game_component::direction_type::left);
 				for(int y = pos_y() - get_enemy_height(); y < pos_y(); y++)
+				{
 					if(check_game_collision(next_x - get_game_map()->get_map_offset(), y))
-						return;
+					{
+						move_collision = true;
+						break;
+					}
+				}
 			break;
 			case 1:
-				set_direction(game_component::direction_type::right);
+				//set_direction(game_component::direction_type::right);
 				for(int y = pos_y() - get_enemy_height(); y < pos_y(); y++)
+				{
 					if(check_game_collision(next_x + get_enemy_width() - get_game_map()->get_map_offset(), y))
-						return;
+					{
+						move_collision = true;
+						break;
+					}
+				}
 			break;
 		}
 
-		pos_x(next_x);
+		if(!move_collision)
+			pos_x(next_x);
 	}
 
 	if(can_shoot())
@@ -63,6 +97,23 @@ void game::game_trooper::move_tick()
 
 		log("trooper laser initiated at x:%d y%d", laser->pos_x(), laser->pos_y());
 		shoot(laser);
+	}
+
+	if(get_relative_character_y() == -1 && !jump_ticks)
+	{
+		bool ground_collision = false;
+
+		for(int i = 0; i < get_enemy_width(); i++)
+		{
+			if(check_game_collision(pos_x() - get_game_map()->get_map_offset() + i, pos_y() + 1))
+			{
+				ground_collision = true;
+				break;
+			}
+		}
+
+		if(ground_collision)
+			jump_ticks = 10;
 	}
 }
 
