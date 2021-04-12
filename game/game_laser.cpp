@@ -102,15 +102,10 @@ void game::game_laser::check_laser_collision()
 		collision_point.y(pos_y());
 		collided = true;
 
-		switch(collided_component->get_type())
-		{
-			case game_component::component_type::character:
-				reinterpret_cast<game_character*>(collided_component)->add_life(-get_game_settings()->get_enemy_base_laser_damage() * (type + 1));
-			break;
-			case game_component::component_type::trooper:
-				reinterpret_cast<game_enemy*>(collided_component)->add_life(-get_game_settings()->get_character_base_laser_damage() * (type + 1));
-			break;
-		}
+		if(collided_component->get_type() == game_component::component_type::character)
+			reinterpret_cast<game_character*>(collided_component)->add_life(-get_game_settings()->get_enemy_base_laser_damage() * (type + 1));
+		else if(collided_component->is_enemy())
+			reinterpret_cast<game_enemy*>(collided_component)->add_life(-get_game_settings()->get_character_base_laser_damage() * (type + 1));
 
 		log("laser_collided at x:%d y:%d on %s", collision_point.x(), collision_point.y(), collided_component->get_type_str());
 	}

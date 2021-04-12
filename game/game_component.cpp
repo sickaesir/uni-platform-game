@@ -221,3 +221,8 @@ void game::game_component::invalidate()
 	if(!parent_component) return;
 	parent_component->invalidated_children.add(this);
 }
+
+bool game::game_component::is_enemy()
+{
+	return get_type() >= enemy_start && get_type() <= enemy_end;
+}

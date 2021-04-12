@@ -44,6 +44,7 @@ namespace game
 		void add_component(game_component* component);
 		void remove_component(game_component* component);
 		void invalidate();
+		bool is_enemy();
 		game_component* get_parent();
 		class game_map* get_game_map();
 		class game* get_game_instance();

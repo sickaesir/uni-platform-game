@@ -16,7 +16,8 @@ void game::game_powerup::tick()
 	int render_x = pos_x() - get_game_map()->get_map_offset();
 	if(render_x >= 0 && render_x <= get_game_settings()->get_game_width() && descend && get_tick_count() % 50 == 0)
 	{
-		if(!check_game_collision(render_x, pos_y() + 3))
+		game_component* collided_component = check_game_collision(render_x, pos_y() + 3);
+		if(!collided_component || collided_component->is_enemy())
 			pos_y(pos_y() + 1);
 		else
 			descend = false;
