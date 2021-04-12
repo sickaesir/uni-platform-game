@@ -3,6 +3,7 @@
 #include "game.hpp"
 #include "game_trooper.hpp"
 #include "game_map.hpp"
+#include "game_settings.hpp"
 
 game::game_enemy::game_enemy(game_component* parent, game_component::component_type type) :
 	game_component(parent, type)
@@ -56,11 +57,18 @@ int game::game_enemy::get_relative_character_x()
 
 game::game_component* game::game_enemy::check_collision(game_component* requester, int x, int y)
 {
-	if(x > pos_x() &&
-		x < pos_x() + get_enemy_width() &&
-		y > pos_y() &&
-		y < pos_y() + get_enemy_height())
-		return this;
+	int render_x = pos_x() - get_game_map()->get_map_offset();
+	for(int rx = render_x - 1; rx < render_x + get_enemy_width() + 1; rx++)
+	{
+		if(rx < 0 || rx > get_game_settings()->get_game_width())
+			continue;
+
+		for(int ry = pos_y() - get_enemy_height() + 1; ry < pos_y(); ry++)
+		{
+			if(ry == y && x == rx)
+				return this;
+		}
+	}
 
 	return game_component::check_collision(requester, x, y);
 }

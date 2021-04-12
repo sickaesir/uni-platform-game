@@ -396,3 +396,19 @@ int game::game_character::get_extra_jump()
 {
 	return extra_jump;
 }
+
+game::game_component* game::game_character::check_collision(game_component* requester, int x, int y)
+{
+	int render_x = pos_x() /*- get_game_map()->get_map_offset()*/;
+
+	for(int rx = render_x; rx < render_x + 3; rx++)
+	{
+		for(int ry = pos_y() - 3; ry < pos_y(); ry++)
+		{
+			if(rx == x && ry == y)
+				return this;
+		}
+	}
+
+	return game_component::check_collision(requester, x, y);
+}

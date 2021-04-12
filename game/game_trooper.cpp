@@ -38,13 +38,15 @@ void game::game_trooper::move_tick()
 	{
 		case -1:
 			set_direction(game_component::direction_type::left);
-			if(check_game_collision(next_x - get_game_map()->get_map_offset(), pos_y()))
-				return;
+			for(int y = pos_y() - get_enemy_height(); y < pos_y(); y++)
+				if(check_game_collision(next_x - get_game_map()->get_map_offset(), y))
+					return;
 		break;
 		case 1:
 			set_direction(game_component::direction_type::right);
-			if(check_game_collision(next_x + get_enemy_width() - get_game_map()->get_map_offset(), pos_y()))
-				return;
+			for(int y = pos_y() - get_enemy_height(); y < pos_y(); y++)
+				if(check_game_collision(next_x + get_enemy_width() - get_game_map()->get_map_offset(), y))
+					return;
 		break;
 	}
 
