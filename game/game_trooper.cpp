@@ -30,6 +30,7 @@ void game::game_trooper::move_tick()
 {
 	if(get_tick_count() % get_game_settings()->get_enemy_movement_tick_interval()) return;
 
+
 	log("rel char x:%d y:%d", get_relative_character_x(), get_relative_character_y());
 
 	int next_x = pos_x() + get_relative_character_x();

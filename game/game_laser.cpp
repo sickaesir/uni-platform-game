@@ -6,11 +6,15 @@
 #include "../utils/runtime_utils.hpp"
 #include "game.hpp"
 
-game::game_laser::game_laser(game_component* parent, int laser_type) : 
+game::game_laser::game_laser(game_component* parent, int laser_type,
+		console::color laser_color /*= console::color::red*/,
+		bool skip_rock_collision /*= false*/) :
 	game_component(parent, game_component::component_type::laser),
 	type(laser_type),
 	collision_point({0, 0}),
-	collided(false)
+	collided(false),
+	color(laser_color),
+	skip_rock(skip_rock_collision)
 {
 }
 
@@ -41,29 +45,9 @@ void game::game_laser::tick()
 			log("laser life ended, invalidating component");
 		}
 	}
-	else
-	{
-		int x = 0;
 
-		switch(get_direction())
-		{
-			case game_component::direction_type::right:
-				x = pos_x() + get_laser_length();
-			break;
-			case game_component::direction_type::left:
-				x = pos_x();
-			break;
-		}
+	check_laser_collision();
 
-		game_component* collided_component = check_game_collision(x, pos_y());
-		if(collided_component)
-		{
-			collision_point.x(x);
-			collision_point.y(pos_y());
-			collided = true;
-			log("laser collided at x:%d y:%d", collision_point.x(), collision_point.y());
-		}
-	}
 	if(get_game_instance()->get_tick_count() % 10 == 0)
 	{
 		switch(get_direction())
@@ -76,6 +60,35 @@ void game::game_laser::tick()
 				pos_x(pos_x() - 1);
 			break;
 		}
+	}
+}
+
+void game::game_laser::check_laser_collision()
+{
+	int x = 0;
+	switch(get_direction())
+	{
+		case game_component::direction_type::right:
+			x = pos_x() + get_laser_length();
+		break;
+		case game_component::direction_type::left:
+			x = pos_x();
+		break;
+	}
+
+	game_component* collided_component = check_game_collision(x, pos_y());
+	if(!collided_component)
+		return;
+
+	if(collided_component->get_type() == game_component::component_type::rock && skip_rock)
+		return;
+
+	if(!collided)
+	{
+		collision_point.x(x);
+		collision_point.y(pos_y());
+		collided = true;
+		log("laser_collided at x:%d y:%d", collision_point.x(), collision_point.y());
 	}
 }
 
@@ -111,6 +124,6 @@ void game::game_laser::render()
 			&& collided && render_x <= collision_point.x())
 				continue;
 
-		get_game_io()->draw(render_x, pos_y(), console::color::red, true, sprites::lasers[get_laser_index()][i]);
+		get_game_io()->draw(render_x, pos_y(), color, true, sprites::lasers[get_laser_index()][i]);
 	}
 }
