@@ -29,6 +29,7 @@ namespace game
 		unsigned int urandom_number(unsigned int min, unsigned int max);
 
 		void game_over();
+		void add_points(int amount);
 
 	private:
 		void render_console();
@@ -41,5 +42,6 @@ namespace game
 		class game_settings* settings;
 		class game_character* character;
 		unsigned int tick_count;
+		int points;
 	};
 }

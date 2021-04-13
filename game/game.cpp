@@ -10,7 +10,8 @@
 
 game::game::game(int argc, char** argv) : game_component(nullptr, game_component::component_type::game),
 	running(true),
-	tick_count(0)
+	tick_count(0),
+	points(0)
 {
 	settings = new game_settings(argc, argv); // ! must be first !
 	map = new game_map(this);
@@ -125,7 +126,17 @@ unsigned int game::game::urandom_number(unsigned int min, unsigned int max)
 
 void game::game::game_over()
 {
+	points = 0;
 	get_map()->clear_children();
 	get_map()->reset_map_offset();
 	get_character()->initialize_position();
+	log("game over processed");
+}
+
+void game::game::add_points(int amount)
+{
+	points += amount;
+
+	if(amount > 1)
+		log("added %d points, total: %d", amount, points);
 }

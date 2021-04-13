@@ -152,6 +152,7 @@ void game::game_enemy::add_life(int amount)
 
 	if(life <= 0)
 	{
+		get_game_instance()->add_points(get_game_settings()->get_enemy_kill_points_increase());
 		invalidate();
 	}
 }

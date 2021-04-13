@@ -28,6 +28,7 @@ namespace game
 		void generate_enemies();
 	private:
 		int map_offset;
+		int max_map_offset;
 		int rocks_to_generate;
 		int powerups_to_generate;
 		int enemies_to_generate;

@@ -3,6 +3,7 @@
 #include "game_map.hpp"
 #include "game_settings.hpp"
 #include "game_character.hpp"
+#include "game.hpp"
 
 game::game_powerup::game_powerup(game_component* parent, powerup_type _type) :
 	game_component(parent, game_component::component_type::powerup),
@@ -99,6 +100,8 @@ void game::game_powerup::pick()
 			character->upgrade_jump();
 		break;
 	}
+
+	get_game_instance()->add_points(get_game_settings()->get_powerup_points_increase());
 
 	invalidate();
 }

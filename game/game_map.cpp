@@ -15,7 +15,8 @@ game::game_map::game_map(game_component* parent) :
 	map_offset(0),
 	rocks_to_generate(0),
 	powerups_to_generate(0),
-	enemies_to_generate(0)
+	enemies_to_generate(0),
+	max_map_offset(0)
 {
 }
 
@@ -181,9 +182,15 @@ bool game::game_map::on_keyboard(int character)
 void game::game_map::increment_map_offset()
 {
 	map_offset++;
-	if(!(map_offset % get_game_settings()->get_map_offset_threshold()))
+	if(map_offset > max_map_offset)
 	{
-		extend_map();
+		max_map_offset = map_offset;
+		get_game_instance()->add_points(get_game_settings()->get_map_exploration_points_increase());
+		if(!(map_offset % get_game_settings()->get_map_offset_threshold()))
+		{
+			get_game_instance()->add_points(get_game_settings()->get_map_extension_points_increase());
+			extend_map();
+		}
 	}
 }
 
@@ -194,7 +201,7 @@ void game::game_map::decrement_map_offset()
 
 void game::game_map::reset_map_offset()
 {
-	map_offset = 0;
+	max_map_offset = map_offset = 0;
 }
 
 int game::game_map::get_map_offset()

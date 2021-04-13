@@ -35,6 +35,10 @@ void game::game_settings::initialize_settings()
 	enemy_base_life = settings::enemy_base_life;
 	enemy_base_laser_damage = settings::enemy_base_laser_damage;
 	character_base_laser_damage = settings::character_base_laser_damage;
+	powerup_points_increase = settings::powerup_points_increase;
+	enemy_kill_points_increase = settings::enemy_kill_points_increase;
+	map_exploration_points_increase = settings::map_exploration_points_increase;
+	map_extension_points_increase = settings::map_extension_points_increase;
 }
 
 void game::game_settings::parse_cmd_settings(int argc, char** argv)
@@ -187,6 +191,22 @@ bool game::game_settings::parse_cmd_arg(char* arg, char* arg_value)
 	{
 		character_base_laser_damage = utils::runtime_utils::atoi(arg_value);
 	}
+	else if(CMP_ARG("powerup-points-increase"))
+	{
+		powerup_points_increase = utils::runtime_utils::atoi(arg_value);
+	}
+	else if(CMP_ARG("enemy-kill-points-increase"))
+	{
+		powerup_points_increase = utils::runtime_utils::atoi(arg_value);
+	}
+	else if(CMP_ARG("map-exploration-points-increase"))
+	{
+		map_exploration_points_increase = utils::runtime_utils::atoi(arg_value);
+	}
+	else if(CMP_ARG("map-extension-points-increase"))
+	{
+		map_extension_points_increase = utils::runtime_utils::atoi(arg_value);
+	}
 
 #undef CMP_ARG
 
@@ -316,4 +336,24 @@ int game::game_settings::get_enemy_base_laser_damage()
 int game::game_settings::get_character_base_laser_damage()
 {
 	return character_base_laser_damage;
+}
+
+int game::game_settings::get_powerup_points_increase()
+{
+	return powerup_points_increase;
+}
+
+int game::game_settings::get_enemy_kill_points_increase()
+{
+	return enemy_kill_points_increase;
+}
+
+int game::game_settings::get_map_exploration_points_increase()
+{
+	return map_exploration_points_increase;
+}
+
+int game::game_settings::get_map_extension_points_increase()
+{
+	return map_extension_points_increase;
 }

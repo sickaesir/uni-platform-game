@@ -34,6 +34,10 @@ namespace game
 		int get_enemy_base_life();
 		int get_enemy_base_laser_damage();
 		int get_character_base_laser_damage();
+		int get_powerup_points_increase();
+		int get_enemy_kill_points_increase();
+		int get_map_exploration_points_increase();
+		int get_map_extension_points_increase();
 
 	private:
 		void initialize_settings();
@@ -67,6 +71,10 @@ namespace game
 		int enemy_base_life;
 		int enemy_base_laser_damage;
 		int character_base_laser_damage;
+		int powerup_points_increase;
+		int enemy_kill_points_increase;
+		int map_exploration_points_increase;
+		int map_extension_points_increase;
 		char* game_path;
 	};
 }

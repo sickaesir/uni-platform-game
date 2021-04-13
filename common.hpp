@@ -35,6 +35,10 @@ namespace settings
 	constexpr const int enemy_base_life = 100; // enemy start life points
 	constexpr const int enemy_base_laser_damage = 5; // laser damage made by enemy (with no powerups)
 	constexpr const int character_base_laser_damage = 20; // laser damage made by character (with no powerups)
+	constexpr const int powerup_points_increase = 10; // amount of points rewarded when powerup pick
+	constexpr const int enemy_kill_points_increase = 20; // amount of points rewarded when enemy killed
+	constexpr const int map_exploration_points_increase = 1; // amount of points rewarded progressing the map
+	constexpr const int map_extension_points_increase = 5; // amount of points rewarded when the map gets extended
 };
 
 // console settings
