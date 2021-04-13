@@ -371,8 +371,10 @@ void game::game_character::add_life(int amount)
 	if(life > get_game_settings()->get_max_character_life())
 		life = get_game_settings()->get_max_character_life();
 
-	if(life < 0)
-		life = 0;
+	if(life <= 0)
+	{
+		get_game_instance()->game_over();
+	}
 }
 
 void game::game_character::upgrade_laser()

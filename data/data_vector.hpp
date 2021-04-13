@@ -2,6 +2,7 @@
 #include "../common.hpp"
 #include "../utils/memory_utils.hpp"
 #include "../utils/math_utils.hpp"
+#include "../utils/meta_utils.hpp"
 
 namespace data
 {
@@ -26,7 +27,10 @@ namespace data
 
 		~data_vector()
 		{
-				delete[] vector_ptr;
+			while(get_size())
+				remove_at(0);
+
+			delete[] vector_ptr;
 		}
 
 	public:
@@ -56,6 +60,9 @@ namespace data
 
 		void remove_at(int index)
 		{
+			if(utils::meta_utils::is_pointer<elem_t>::value)
+				delete vector_ptr[index];
+
 			for(int i = index; i < size - 1; i++)
 				vector_ptr[i] = vector_ptr[i + 1];
 			size--;

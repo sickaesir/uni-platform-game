@@ -28,6 +28,8 @@ namespace game
 		unsigned int urandom_number();
 		unsigned int urandom_number(unsigned int min, unsigned int max);
 
+		void game_over();
+
 	private:
 		void render_console();
 

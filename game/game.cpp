@@ -122,3 +122,7 @@ unsigned int game::game::urandom_number(unsigned int min, unsigned int max)
 {
 	return min + (urandom_number() % (max - min + 1));
 }
+
+void game::game::game_over()
+{
+}
