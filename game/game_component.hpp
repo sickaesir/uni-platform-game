@@ -24,11 +24,12 @@ namespace game
 			map,
 			rock,
 			powerup,
-			trooper
+			trooper,
+			flyier
 		};
 
 		static constexpr const component_type enemy_start = component_type::trooper;
-		static constexpr const component_type enemy_end = component_type::trooper;
+		static constexpr const component_type enemy_end = component_type::flyier;
 
 
 	public:

@@ -6,6 +6,7 @@
 #include "game_settings.hpp"
 #include "game_laser.hpp"
 #include "game_io.hpp"
+#include "game_flyier.hpp"
 
 game::game_enemy::game_enemy(game_component* parent, game_component::component_type type) :
 	game_component(parent, type),
@@ -108,6 +109,8 @@ game::game_enemy* game::game_enemy::generate_enemy(game_component::component_typ
 	{
 		case game_component::component_type::trooper:
 			return new game_trooper(parent);
+		case game_component::component_type::flyier:
+			return new game_flyier(parent);
 		default:
 			return nullptr;
 	}

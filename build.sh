@@ -13,4 +13,5 @@ g++ -g -pthread --std=c++17 -lstdc++ -lncursesw -o uni-platform-game-bin \
 	game/game_laser.cpp	\
 	game/game_powerup.cpp	\
 	game/game_enemy.cpp	\
-	game/game_trooper.cpp
+	game/game_trooper.cpp	\
+	game/game_flyier.cpp
