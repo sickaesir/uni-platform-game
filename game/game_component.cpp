@@ -226,3 +226,9 @@ bool game::game_component::is_enemy()
 {
 	return get_type() >= enemy_start && get_type() <= enemy_end;
 }
+
+void game::game_component::clear_children()
+{
+	while(get_children_count())
+		remove_component(get_child(0));
+}

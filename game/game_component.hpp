@@ -58,6 +58,7 @@ namespace game
 		unsigned int get_tick_count();
 		component_type get_type();
 		const char* get_type_str();
+		void clear_children();
 
 	public:
 		int pos_x();

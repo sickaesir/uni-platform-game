@@ -60,8 +60,8 @@ namespace data
 
 		void remove_at(int index)
 		{
-			if(utils::meta_utils::is_pointer<elem_t>::value)
-				delete vector_ptr[index];
+//			if(utils::meta_utils::is_pointer<elem_t>::value)
+//				delete vector_ptr[index];
 
 			for(int i = index; i < size - 1; i++)
 				vector_ptr[i] = vector_ptr[i + 1];

@@ -96,6 +96,9 @@ void game::game_character::initialize_position()
 
 	pos_y(char_y); pos_x(char_x);
 	jump_velocity = 0;
+	life = get_game_settings()->get_max_character_life();
+	using_laser = 0;
+	extra_jump = 0;
 
 	log("character position initialized, x:%d y:%d", char_x, char_y);
 }

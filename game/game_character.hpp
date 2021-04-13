@@ -22,6 +22,7 @@ namespace game
 		void upgrade_jump();
 		int get_using_laser();
 		int get_extra_jump();
+		void initialize_position();
 
 	private:
 		void render_head();
@@ -40,7 +41,6 @@ namespace game
 
 	private:
 		bool check_character_collision(int x, int y);
-		void initialize_position();
 		void jump_tick();
 
 	private:

@@ -192,6 +192,11 @@ void game::game_map::decrement_map_offset()
 	map_offset--;
 }
 
+void game::game_map::reset_map_offset()
+{
+	map_offset = 0;
+}
+
 int game::game_map::get_map_offset()
 {
 	return map_offset;

@@ -19,6 +19,7 @@ namespace game
 		int get_map_offset();
 		void increment_map_offset();
 		void decrement_map_offset();
+		void reset_map_offset();
 
  	private:
 		void extend_map();

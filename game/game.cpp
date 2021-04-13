@@ -125,4 +125,7 @@ unsigned int game::game::urandom_number(unsigned int min, unsigned int max)
 
 void game::game::game_over()
 {
+	get_map()->clear_children();
+	get_map()->reset_map_offset();
+	get_character()->initialize_position();
 }
