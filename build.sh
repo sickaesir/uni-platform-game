@@ -8,6 +8,7 @@ g++ -g -pthread --std=c++17 -lstdc++ -lncursesw -o uni-platform-game-bin \
 	game/game.cpp		\
 	game/game_map.cpp	\
 	game/game_io.cpp	\
+	game/game_menu.cpp	\
 	game/game_character.cpp \
 	game/game_rock.cpp	\
 	game/game_laser.cpp	\

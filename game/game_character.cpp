@@ -421,3 +421,8 @@ game::game_component* game::game_character::check_collision(game_component* requ
 
 	return game_component::check_collision(requester, x, y);
 }
+
+int game::game_character::get_life()
+{
+	return life;
+}

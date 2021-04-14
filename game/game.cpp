@@ -5,6 +5,7 @@
 #include "game_io.hpp"
 #include "game_settings.hpp"
 #include "game_character.hpp"
+#include "game_menu.hpp"
 #include "../utils/runtime_utils.hpp"
 #include "../utils/memory_utils.hpp"
 
@@ -17,9 +18,11 @@ game::game::game(int argc, char** argv) : game_component(nullptr, game_component
 	map = new game_map(this);
 	io = new game_io(this);
 	character = new game_character(this);
+	menu = new game_menu(this);
 	add_component(map);
 	add_component(io);
 	add_component(character);
+	add_component(menu);
 }
 
 game::game::~game()
@@ -139,4 +142,9 @@ void game::game::add_points(int amount)
 
 	if(amount > 1)
 		log("added %d points, total: %d", amount, points);
+}
+
+int game::game::get_points()
+{
+	return points;
 }

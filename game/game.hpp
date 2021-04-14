@@ -30,6 +30,7 @@ namespace game
 
 		void game_over();
 		void add_points(int amount);
+		int get_points();
 
 	private:
 		void render_console();
@@ -41,6 +42,7 @@ namespace game
 		class game_io* io;
 		class game_settings* settings;
 		class game_character* character;
+		class game_menu* menu;
 		unsigned int tick_count;
 		int points;
 	};

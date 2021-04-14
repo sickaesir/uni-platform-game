@@ -24,6 +24,9 @@ namespace game
 			map,
 			rock,
 			powerup,
+			menu,
+
+			// enemies
 			trooper,
 			flyier
 		};

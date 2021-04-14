@@ -22,6 +22,7 @@ namespace game
 		void upgrade_jump();
 		int get_using_laser();
 		int get_extra_jump();
+		int get_life();
 		void initialize_position();
 
 	private:
