@@ -92,7 +92,7 @@ void game::game_trooper::move_tick()
 			shoot_x += get_enemy_width();
 
 		//log("trooper laser initiated at x:%d y%d", laser->pos_x(), laser->pos_y());
-		shoot(shoot_x, pos_y() - 1);
+		shoot(shoot_x, pos_y() - get_laser_y_offset());
 	}
 
 	if(get_relative_character_y() == -1 && !jump_ticks)
@@ -219,4 +219,9 @@ unsigned int game::game_trooper::get_enemy_height()
 unsigned int game::game_trooper::get_enemy_width()
 {
 	return 6;
+}
+
+unsigned int game::game_trooper::get_laser_y_offset()
+{
+	return 1;
 }

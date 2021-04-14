@@ -117,6 +117,10 @@ bool game::game_character::check_character_collision(int x, int y)
 		powerup->pick();
 	}
 
+	if(collision_component->get_type() >= game_component::enemy_start &&
+		collision_component->get_type() <= game_component::enemy_end)
+		return false;
+
 	return true;
 }
 

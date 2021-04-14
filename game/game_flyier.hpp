@@ -12,5 +12,10 @@ namespace game
 		virtual void render() override;
 		virtual unsigned int get_enemy_height() override;
 		virtual unsigned int get_enemy_width() override;
+		virtual unsigned int get_laser_y_offset() override;
+
+	private:
+		void shoot_tick();
+		void move_tick();
 	};
 };

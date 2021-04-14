@@ -37,11 +37,11 @@ void game::game_enemy::tick()
 		relative_character_x = 0;
 
 
-	int enemy_top = pos_y() - get_enemy_height();
+	int enemy_top = pos_y() - get_laser_y_offset() - get_enemy_height();
 
-	if(enemy_top > character_y)
+	if(enemy_top > character_y + 2)
 		relative_character_y = -1;
-	else if(enemy_top < character_y)
+	else if(enemy_top < character_y - 2)
 		relative_character_y = 1;
 	else
 		relative_character_y = 0;
@@ -69,7 +69,7 @@ void game::game_enemy::render_life()
 		case 0: bar_color = console::color::red; break;
 	}
 
-	int base_x = pos_x() - get_game_map()->get_map_offset();
+	int base_x = pos_x() - get_game_map()->get_map_offset() + (get_enemy_width() / 2) - 3;
 	if(base_x < 0 || base_x > get_game_settings()->get_game_width())
 		return;
 
@@ -152,6 +152,7 @@ void game::game_enemy::add_life(int amount)
 
 	if(life <= 0)
 	{
+		log("monster dead, invalidating");
 		get_game_instance()->add_points(get_game_settings()->get_enemy_kill_points_increase());
 		invalidate();
 	}

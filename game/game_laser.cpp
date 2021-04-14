@@ -96,6 +96,9 @@ void game::game_laser::check_laser_collision()
 		collided_component->get_type() == get_parent()->get_type())
 		return;
 
+	if(collided_component->is_enemy() && get_parent()->is_enemy())
+		return;
+
 	if(!collided)
 	{
 		collision_point.x(x);

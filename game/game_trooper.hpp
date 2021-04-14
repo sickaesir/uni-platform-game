@@ -14,6 +14,7 @@ namespace game
 	public:
 		virtual unsigned int get_enemy_height() override;
 		virtual unsigned int get_enemy_width() override;
+		virtual unsigned int get_laser_y_offset() override;
 
 	private:
 		void render_right();
