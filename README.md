@@ -200,5 +200,8 @@ Per struttura non è possibile per un componente arrecare danno ad un componente
 ##### Menu
 A destra della mappa di gioco (escluso dalla configurazione `--game-width`) viene renderizzato un menu che mostra la vita del personaggio, i punti di gioco accumulati e lo stato dei vari powerup.
 
-
+##### PRNG
+Essendo vietate ulteriori librerie eccetto `ncurses`, la generazione dei numeri casuali viene implementata tramite il numero di tick.
+La classe `game` tiene traccia del numero di chiamate alla funzione `tick`, questo numero viene poi hashato tramite l'hash `djb2`, il quale contribuisce a non creare un numero immediatamente deterministico.
+Al risultato viene poi applicata la classica formula per numeri random (come se si usasse la funzione `rand`): `min + (hashed_ticks % (max - min + 1))`
 
