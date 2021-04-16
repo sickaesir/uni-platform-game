@@ -167,7 +167,7 @@ La distanza minima tra una roccia e l'altra può essere configurata tramite le v
 Il personaggio di gioco è l'unico componente dove le coordinate assolute coincidono con le coordinate relative su schermo, questo avviene perchè, per struttura, il personaggio è sempre visualizzato a schermo.
 Viene gestito dalla classe `game_character` ed è inoltre l'unico componente a gestire l'input da tastiera.
 Per muoversi, vengono utilizzati i tasti freccia destro/sinistro, per saltare il tasto freccia sù, per sparare la barra spaziatrice.
-Le collisioni vengono controllate in più punti, come sul salto (se viene toccato un componente con la testa la salita si interrompe), alla base (se non c'è collisione alle gambe il personaggio inizierà la discesa) e su movimenti a destra/sinistra.
+Le collisioni vengono controllate in più punti, come sul salto (se viene toccato un componente con la testa la salita si interrompe), alla base (se non c'è collisione alle gambe il personaggio inizierà la discesa) e su movimenti a destra/sinistra (non è possibile camminare "dentro" altri componenti).
 La classe si occupa anche di controllare se esiste una collisione con un powerup (per raccoglierlo) e per la determinazione del game over (se la vita del personaggio arriva a 0).
 
 ##### Powerup
@@ -192,6 +192,7 @@ Nel gioco sono implementati due tipi di nemici:
 
 ##### Laser
 I nemici come il personaggio di gioco utilizzano il laser gestito dalla classe `game_laser` per arrecarsi danno a vicenda.
+Quando si spara, un laser viene instanziato nella posizione desiderata e prosegue orizzontalmente fino a trovare un ostacolo (=viene determinata una collisione).
 In quanto il calcolo della collisione per tutti i laser ha un'alta complessità computazionale il componente viene cancellato se il laser raggiunge il limite della mappa.
 Il danno arrecato dal laser viene determinato dalla configurazione del danno associata moltiplicata per il livello del laser.
 Ad ogni livello viene associato una grafica diversa definita nel namespace `sprites` nel file header comune.
