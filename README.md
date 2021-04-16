@@ -25,9 +25,15 @@ I valori di default di tali variabili sono incluse nel file `common.hpp`.
 Per consentire, inoltre, una configurazione dinamica del gioco le variabili di configurazione vengono wrappate nella classe `game_settings` la quale si occupa di interpretare gli argomenti in linea di comando ed esporre i vari getter per ogni variable.
 Esiste un argomento per ogni variabile di configurazione, segue una lista:
 
-`--game-height | intero | altezza dell'area di gioco (console di debug esclusa)`__
-`--game-width | intero | larghezza dell'area di gioco (menù escluso)`__
-`--map-wall-padding | intero | larghezza del muro iniziale (sx) di gioco, altezza del "soffitto" e "pavimento" della mappa`__
+`--game-height | intero | altezza dell'area di gioco (console di debug esclusa)`
+
+
+`--game-width | intero | larghezza dell'area di gioco (menù escluso)`
+
+
+`--map-wall-padding | intero | larghezza del muro iniziale (sx) di gioco, altezza del "soffitto" e "pavimento" della mappa`
+
+
 `--console-mode | booleano | specifica se la console di debug del gioco viene renderizzata`__
 `--console-lines | intero | numero di righe della console di debug da renderizzare`__
 `--io-inactive-ticks | intero | numero di tick da attendere dall'ultimo input da tastiera per determinare che l'utente sia inattivo`__
