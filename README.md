@@ -34,32 +34,82 @@ Esiste un argomento per ogni variabile di configurazione, segue una lista:
 `--map-wall-padding | intero | larghezza del muro iniziale (sx) di gioco, altezza del "soffitto" e "pavimento" della mappa`
 
 
-`--console-mode | booleano | specifica se la console di debug del gioco viene renderizzata`__
-`--console-lines | intero | numero di righe della console di debug da renderizzare`__
-`--io-inactive-ticks | intero | numero di tick da attendere dall'ultimo input da tastiera per determinare che l'utente sia inattivo`__
-`--character-jump-velocity | intero | numero di tick per il quale il personaggio sale dopo aver ricevuto un comando di salto`__
-`--gravity-ticks | intero | numero di tick dopo il quale il personaggio "discende" di un'unità se si trova a mezz'aria`__
-`--map-offsetting-min | intero | posizione sull'asse X del personaggio dopo la quale la mappa slitta a sinistra di un'unità`__
-`--map-offsetting-max | intero | posizione sull'asse X del personaggio dopo la quale la mappa slitta a destra di un'unità`__
-`--map-offset-threshold | intero | valore massimo di slittamento dopo la quale la mappa viene estesa`__
-`--rocks-gen-count | intero | numero di rocce da generare ad ogni estensione della mappa`__
-`--rock-gen-collision-padding | intero | numero di unità per il cui distanziare una roccia dall'altra`__
-`--max-character-life | intero | valore iniziale e massimo della vita del personaggio`__
-`--character-reattack-ticks | intero | numero di tick da aspettare tra uno sparo e l'altro del personaggio`__
-`--powerup-heal-amount | intero | ammontare di vita da incrementare quando si prende un powerup vita`__
-`--powerup-max-gen-amount | intero | numero di powerup da generare ad ogni estensione della mappa`__
-`--powerup-max-total-jump | intero | valore massimo di punti salto extra dati dai powerup`__
-`--enemy-gen-count | intero | numero base di nemici da generare ad ogni estensione della mappa`__
-`--enemy-character-distance | intero | distanza in unità che i nemici devono tenere dal personaggio`__
-`--enemy-movement-tick-interval | intero | numero di tick da aspettare per un movimento dei nemici`__
-`--enemy-shoot-tick-interval | intero | numero di tick da aspettare per uno sparo dei nemici`__
-`--enemy-base-life | intero | valore iniziale e massimo della vita dei nemici`__
-`--enemy-base-laser-damage | intero | numero base di punti vita sottratti da uno sparo nemico`__
-`--character-base-laser-damage | intero | numero base di punti vita sottratti da uno sparo del personaggio`__
-`--powerup-points-increase | intero | numero di punti ricompensati quando si raccoglie un powerup`__
-`--enemy-kill-points-increase | intero | numero di punti ricompensati quando si uccide un nemico`__
-`--map-exploration-points-increase | intero | numero di punti ricompensati esplorando la mappa`__
-`--map-extension-points-increase | intero | numero di punti ricompensati quando la mappa si estende`__
+`--console-mode | booleano | specifica se la console di debug del gioco viene renderizzata`
+
+
+`--console-lines | intero | numero di righe della console di debug da renderizzare`
+
+
+`--io-inactive-ticks | intero | numero di tick da attendere dall'ultimo input da tastiera per determinare che l'utente sia inattivo`
+
+
+`--character-jump-velocity | intero | numero di tick per il quale il personaggio sale dopo aver ricevuto un comando di salto`
+
+
+`--gravity-ticks | intero | numero di tick dopo il quale il personaggio "discende" di un'unità se si trova a mezz'aria`
+
+
+`--map-offsetting-min | intero | posizione sull'asse X del personaggio dopo la quale la mappa slitta a sinistra di un'unità`
+
+
+`--map-offsetting-max | intero | posizione sull'asse X del personaggio dopo la quale la mappa slitta a destra di un'unità`
+
+
+`--map-offset-threshold | intero | valore massimo di slittamento dopo la quale la mappa viene estesa`
+
+
+`--rocks-gen-count | intero | numero di rocce da generare ad ogni estensione della mappa`
+
+
+`--rock-gen-collision-padding | intero | numero di unità per il cui distanziare una roccia dall'altra`
+
+
+`--max-character-life | intero | valore iniziale e massimo della vita del personaggio`
+
+
+`--character-reattack-ticks | intero | numero di tick da aspettare tra uno sparo e l'altro del personaggio`
+
+
+`--powerup-heal-amount | intero | ammontare di vita da incrementare quando si prende un powerup vita`
+
+
+`--powerup-max-gen-amount | intero | numero di powerup da generare ad ogni estensione della mappa`
+
+
+`--powerup-max-total-jump | intero | valore massimo di punti salto extra dati dai powerup`
+
+
+`--enemy-gen-count | intero | numero base di nemici da generare ad ogni estensione della mappa`
+
+
+`--enemy-character-distance | intero | distanza in unità che i nemici devono tenere dal personaggio`
+
+
+`--enemy-movement-tick-interval | intero | numero di tick da aspettare per un movimento dei nemici`
+
+
+`--enemy-shoot-tick-interval | intero | numero di tick da aspettare per uno sparo dei nemici`
+
+
+`--enemy-base-life | intero | valore iniziale e massimo della vita dei nemici`
+
+
+`--enemy-base-laser-damage | intero | numero base di punti vita sottratti da uno sparo nemico`
+
+
+`--character-base-laser-damage | intero | numero base di punti vita sottratti da uno sparo del personaggio`
+
+
+`--powerup-points-increase | intero | numero di punti ricompensati quando si raccoglie un powerup`
+
+
+`--enemy-kill-points-increase | intero | numero di punti ricompensati quando si uccide un nemico`
+
+
+`--map-exploration-points-increase | intero | numero di punti ricompensati esplorando la mappa`
+
+
+`--map-extension-points-increase | intero | numero di punti ricompensati quando la mappa si estende`
 
 Esempio di configurazione a linea di comando:
 `~ ./run.sh --game-height=60 --game-width=100 --map-wall-padding=3 --console-mode=true --console-lines=5 --io-inactive-ticks=50 --character-jump-velocity=10 --gravity-ticks=70 --map-offsetting-min=10 --map-offsetting-max=40 --map-offset-threshold=100 --rocks-gen-count=10 --rock-gen-collision-padding=3 --max-character-life=100 --character-reattack-ticks=300 --powerup-heal-amount=10 --powerup-max-gen-amount=1 --powerup-max-total-jump=5 --enemy-gen-count=3 --enemy-character-distance=30 --enemy-movement-tick-interval=150 --enemy-shoot-tick-interval=1000 --enemy-base-life=100 --enemy-base-laser-damage=5 --character-base-laser-damage=20 --powerup-points-increase=20 --map-exploration-points-increase=1 --map-extension-points-increase=5`
