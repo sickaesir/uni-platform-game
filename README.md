@@ -203,5 +203,11 @@ A destra della mappa di gioco (escluso dalla configurazione `--game-width`) vien
 ##### PRNG
 Essendo vietate ulteriori librerie eccetto `ncurses`, la generazione dei numeri casuali viene implementata tramite il numero di tick.
 La classe `game` tiene traccia del numero di chiamate alla funzione `tick`, questo numero viene poi hashato tramite l'hash `djb2`, il quale contribuisce a non creare un numero immediatamente deterministico.
+Per aggiungere ulteriore entropia viene eseguita l'operazione di `xor` con un nuovo intero il quale non viene inizializzato, entra quindi in gioco una parte di memoria (volutamente) sporca.
 Al risultato viene poi applicata la classica formula per numeri random (come se si usasse la funzione `rand`): `min + (hashed_ticks % (max - min + 1))`
 
+##### Debug Console
+Essendo il progetto sviluppato utilizzando l'editor di testo `nano` con piccolo ausilio del debugger `gdb`, una console per loggare i comportamenti del codice è stata necessaria.
+I componenti implementano un metodo `log` il quale, tramite il tipo del componente, creano una riga di log del tipo `[component_name] log_text`.
+La console di debug viene visualizzata sotto il gioco e può essere configurata in modo da non essere visibile, possono essere inoltre specificate il numero di righe che il log può contenere.
+Se la console è nascosta, le righe di log vengono scartate.
