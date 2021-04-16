@@ -17,6 +17,7 @@ Esempio:
 
 Per compilare ed eseguire il progetto in un singolo comando viene fornito lo script `run.sh` al quale possono, inoltre, essere passati argomenti in linea di comando per la configurazione del gioco.
 Esempio:
+
 `~ ./run.sh [args]`
 
 ##### Configurazione
@@ -173,9 +174,13 @@ La classe si occupa anche di controllare se esiste una collisione con un powerup
 I powerup sono gestiti dalla classe `game_powerup` e sono sempre generati ad un'altezza fissa.
 Quando vengono generati e visualizzati dal giocatore, essi iniziano una discesa finchè una collisione non viene riscontrata sul basso, in quel caso la discesa termina.
 Esistono 3 tipi di powerup e vengono riconosciuti tramite i simboli al centro di essi (`+`, `>`, `^`): 
+
 `heal`: consente al personaggio di recuperare vita persa nello scontro con nemici
+
 `laser`: consente al personaggio di potenziare il proprio laser e di infliggere, di conseguenza, più danno ai nemici
+
 `jump`: consente al personaggio di saltare più in alto
+
 L'acquisizione di un powerup `laser` o `jump` comporta l'aumentare dei nemici generati alla prossima espansione della mappa, mentre l'acquisizione di qualsiasi powerup fa guadagnare punti di gioco.
 
 ##### Nemici
