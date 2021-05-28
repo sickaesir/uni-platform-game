@@ -1,6 +1,6 @@
 #!/bin/sh
 pkill uni-platform-game-bin
-g++ -g -pthread --std=c++17 -lstdc++ -lncursesw -o uni-platform-game-bin \
+g++ \
 	main.cpp		\
 	data/data_point.cpp	\
 	game/game_settings.cpp	\
@@ -15,4 +15,11 @@ g++ -g -pthread --std=c++17 -lstdc++ -lncursesw -o uni-platform-game-bin \
 	game/game_powerup.cpp	\
 	game/game_enemy.cpp	\
 	game/game_trooper.cpp	\
-	game/game_flyier.cpp
+	game/game_flyier.cpp	\
+	\
+	-g \
+	-pthread \
+	--std=c++17 \
+	-lstdc++ \
+	-lncursesw \
+	-o uni-platform-game-bin
